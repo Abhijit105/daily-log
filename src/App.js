@@ -22,15 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function getLogs(db) {
-  const logsCol = collection(db, "daily-log");
-  const logsSnapshot = await getDocs(logsCol);
-  const logsList = logsSnapshot.docs.map((doc) => doc.data());
-  console.log(logsList.map((log) => log.startTimeStamp?.toDate().getTime()));
-}
-
-getLogs(db);
-
 function App() {
   return (
     <main className="main">

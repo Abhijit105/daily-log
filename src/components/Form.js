@@ -25,6 +25,8 @@ function Form({ db, forms, addForm, removeForm }) {
       console.log(`Document written with id ${newLogRef.id}`);
     } catch (err) {
       console.log("Error adding document: " + err);
+    } finally {
+      setStartTimeStamp(null);
     }
   };
 
@@ -50,7 +52,10 @@ function Form({ db, forms, addForm, removeForm }) {
           <button onClick={initData} disabled={startTimeStamp !== null}>
             Init
           </button>
-          <button type="submit" disabled={title === ""}>
+          <button
+            type="submit"
+            disabled={startTimeStamp === null || title === ""}
+          >
             Done
           </button>
         </div>
