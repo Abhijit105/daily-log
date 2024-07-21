@@ -21,7 +21,7 @@ function Form({ db, forms, addForm, removeForm }) {
       endTimeStamp: new Date(),
     };
     try {
-      const newLogRef = await addDoc(collection(db, "daily-log"), newLog);
+      const newLogRef = await addDoc(collection(db, "daily-log-24"), newLog);
       console.log(`Document written with id ${newLogRef.id}`);
     } catch (err) {
       console.log("Error adding document: " + err);

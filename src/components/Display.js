@@ -15,7 +15,7 @@ function Display({ db }) {
         now.getDate()
       );
       try {
-        const logsCol = collection(db, "daily-log");
+        const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
         const logsToday = logsList.filter(
@@ -32,7 +32,7 @@ function Display({ db }) {
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
-        const logsCol = collection(db, "daily-log");
+        const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
         const logsEnteredDate = logsList.filter(
@@ -50,7 +50,7 @@ function Display({ db }) {
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
-        const logsCol = collection(db, "daily-log");
+        const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
         const logsEnteredDate = logsList.filter(
