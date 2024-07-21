@@ -4,7 +4,7 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import Display from "./components/Display";
 import Forms from "./components/Forms";
 
