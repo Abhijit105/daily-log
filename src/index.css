@@ -8,6 +8,7 @@ html {
 body {
   font-family: "Montserrat", sans-serif;
   color: #212529;
+  margin: 0;
 }
 
 .main {
@@ -21,10 +22,51 @@ body {
 
 .forms {
   overflow-y: auto;
+  flex: 3;
+  border-right: 0.5px solid #212529;
+  padding: 2em;
 }
 
 .display {
   overflow-y: auto;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-left: 0.5px solid #212529;
+  padding: 2em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: flex-start;
+}
+
+.form-item {
+  display: flex;
+  gap: 1em;
+}
+
+.form-item-label {
+  width: 6em;
+  display: inline-block;
+}
+
+.form-item-input {
+  flex: 1;
+  font-family: "Montserrat", sans-serif;
+}
+
+.form-item-textarea {
+  flex: 1;
+  height: 4em;
+  font-family: "Montserrat", sans-serif;
+}
+
+.form-item-button {
+  align-self: center;
 }
 
 .date-label {
@@ -39,4 +81,15 @@ body {
   flex-direction: column;
   gap: 1em;
   align-items: center;
+}
+
+.displayed-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.displayed-log {
+  flex: 1;
+  flex-wrap: wrap;
 }
