@@ -15,7 +15,13 @@ function Forms({ db }) {
   return (
     <div className="forms">
       {forms.map((_) => (
-        <Form db={db} forms={forms} addForm={addForm} removeForm={removeForm} />
+        <Form
+          db={db}
+          forms={forms}
+          addForm={addForm}
+          removeForm={removeForm}
+          key={crypto.randomUUID()}
+        />
       ))}
     </div>
   );

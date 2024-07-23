@@ -99,9 +99,11 @@ function Display({ db }) {
               a.startTimeStamp.toDate().getTime() -
               b.startTimeStamp.toDate().getTime()
           )
-          .map((log) => (
-            <div className="displayed-log">
-              <h3>{log.title}</h3>
+          .map((log, i) => (
+            <div className="displayed-log" key={crypto.randomUUID()}>
+              <h3>
+                {i + 1}. {log.title}
+              </h3>
               <p>{log.description}</p>
               <h5>
                 Start: {log.startTimeStamp.toDate().toLocaleString()} End:{" "}
