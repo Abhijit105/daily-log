@@ -100,7 +100,7 @@ function Display({ db }) {
               b.startTimeStamp.toDate().getTime()
           )
           .map((log) => (
-            <div>
+            <div className="displayed-log">
               <h3>{log.title}</h3>
               <p>{log.description}</p>
               <h5>
