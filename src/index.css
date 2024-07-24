@@ -69,6 +69,11 @@ body {
   align-self: center;
 }
 
+.add-remove-buttons {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 .date-label {
   display: flex;
   flex-direction: row;

@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 
-function Form({ db, forms, addForm, removeForm }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
   const [startTimeStamp, setStartTimeStamp] = useState(null);
   const [message, setMessage] = useState("");
+
+  const changeTitle = function (event) {
+    setLogsData((logsData) =>
+      logsData.map((logData, idx) =>
+        i !== idx ? logData : { ...logData, title: event.target.value }
+      )
+    );
+  };
+
+  const changeDescription = function (event) {
+    setLogsData((logsData) =>
+      logsData.map((logData, idx) =>
+        i !== idx ? logData : { ...logData, description: event.target.value }
+      )
+    );
+  };
 
   const initData = function () {
     const now = new Date();
@@ -14,10 +28,10 @@ function Form({ db, forms, addForm, removeForm }) {
 
   const submitData = async function (event) {
     event.preventDefault();
-    if (!title) return;
+    if (!logsData[i].title) return;
     const newLog = {
-      title,
-      description,
+      title: logsData[i].title,
+      description: logsData[i].description,
       startTimeStamp,
       endTimeStamp: new Date(),
     };
@@ -33,11 +47,19 @@ function Form({ db, forms, addForm, removeForm }) {
   };
 
   const clearTitle = function () {
-    setTitle("");
+    setLogsData((logsData) =>
+      logsData.map((logData, idx) =>
+        idx !== i ? logData : { logData, title: "" }
+      )
+    );
   };
 
   const clearDescription = function () {
-    setDescription("");
+    setLogsData((logsData) =>
+      logsData.map((logData, idx) =>
+        idx !== i ? logData : { ...logData, description: "" }
+      )
+    );
   };
 
   useEffect(() => {
@@ -54,13 +76,13 @@ function Form({ db, forms, addForm, removeForm }) {
   return (
     <>
       <h2>Hello daily-log</h2>
-      <form onSubmit={(event) => submitData(event)} className="form">
+      <form className="form" onSubmit={submitData}>
         <div className="form-item">
           <label className="form-item-label">Title: </label>
           <input
             className="form-item-input"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            value={logsData[i].title}
+            onChange={(event) => changeTitle(event)}
           />
           <button className="form-item-button" onClick={clearTitle}>
             Clear
@@ -70,8 +92,8 @@ function Form({ db, forms, addForm, removeForm }) {
           <label className="form-item-label">Description: </label>
           <textarea
             className="form-item-textarea"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            value={logsData[i].description}
+            onChange={(event) => changeDescription(event)}
           />
           <button className="form-item-button" onClick={clearDescription}>
             Clear
@@ -87,19 +109,19 @@ function Form({ db, forms, addForm, removeForm }) {
           </button>
           <button
             type="submit"
-            disabled={startTimeStamp === null || title === ""}
+            disabled={startTimeStamp === null || logsData[i].title === ""}
           >
             Done
           </button>
         </div>
-        <div className="form-item">
-          <button onClick={addForm}>+</button>
-          <button onClick={removeForm} disabled={forms.length === 1}>
-            -
-          </button>
-        </div>
-        <p className="message">{message}</p>
       </form>
+      <div className="add-remove-buttons">
+        <button onClick={addLogData}>+</button>
+        <button onClick={removeLogData} disabled={logsData.length === 1}>
+          -
+        </button>
+        <p className="message">{message}</p>
+      </div>
     </>
   );
 }

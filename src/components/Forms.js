@@ -2,25 +2,40 @@ import React, { useState } from "react";
 import Form from "./Form";
 
 function Forms({ db }) {
-  const [forms, setForms] = useState([1]);
+  const [logsData, setLogsData] = useState([
+    {
+      title: "",
+      description: "",
+    },
+  ]);
 
-  const addForm = function () {
-    setForms((forms) => [...forms, 1]);
+  const addLogData = function () {
+    setLogsData((logsData) => [
+      ...logsData,
+      {
+        title: "",
+        description: "",
+      },
+    ]);
   };
 
-  const removeForm = function () {
-    setForms((forms) => forms.filter((_, i, arr) => i !== arr.length - 1));
+  const removeLogData = function () {
+    setLogsData((logsData) =>
+      logsData.filter((_, i, arr) => i !== arr.length - 1)
+    );
   };
 
   return (
     <div className="forms">
-      {forms.map((_) => (
+      {logsData.map((logData, i) => (
         <Form
+          i={i}
           db={db}
-          forms={forms}
-          addForm={addForm}
-          removeForm={removeForm}
-          key={crypto.randomUUID()}
+          logsData={logsData}
+          setLogsData={setLogsData}
+          addLogData={addLogData}
+          removeLogData={removeLogData}
+          key={i}
         />
       ))}
     </div>

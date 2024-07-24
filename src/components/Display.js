@@ -100,7 +100,7 @@ function Display({ db }) {
               b.startTimeStamp.toDate().getTime()
           )
           .map((log, i) => (
-            <div className="displayed-log" key={crypto.randomUUID()}>
+            <div className="displayed-log" key={i}>
               <h3>
                 {i + 1}. {log.title}
               </h3>
