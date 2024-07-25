@@ -101,14 +101,17 @@ function Display({ db }) {
           )
           .map((log, i) => (
             <div className="displayed-log" key={i}>
-              <h3>
-                {i + 1}. {log.title}
-              </h3>
-              <p>{log.description}</p>
-              <h5>
-                Start: {log.startTimeStamp.toDate().toLocaleString()} End:{" "}
-                {log.endTimeStamp.toDate().toLocaleString()}
-              </h5>
+              <div>
+                <h3>{i + 1}. </h3>
+              </div>
+              <div>
+                <h3>{log.title}</h3>
+                <p>{log.description}</p>
+                <h5>
+                  Start: {log.startTimeStamp.toDate().toLocaleString()} End:{" "}
+                  {log.endTimeStamp.toDate().toLocaleString()}
+                </h5>
+              </div>
             </div>
           ))}
       </div>

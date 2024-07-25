@@ -9,7 +9,8 @@ function Forms({ db }) {
     },
   ]);
 
-  const addLogData = function () {
+  const addLogData = function (event) {
+    event.preventDefault();
     setLogsData((logsData) => [
       ...logsData,
       {
@@ -19,7 +20,8 @@ function Forms({ db }) {
     ]);
   };
 
-  const removeLogData = function () {
+  const removeLogData = function (event) {
+    event.preventDefault();
     setLogsData((logsData) =>
       logsData.filter((_, i, arr) => i !== arr.length - 1)
     );

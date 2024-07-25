@@ -46,6 +46,10 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     }
   };
 
+  const cancel = function () {
+    setStartTimeStamp(null);
+  };
+
   const clearTitle = function () {
     setLogsData((logsData) =>
       logsData.map((logData, idx) =>
@@ -108,20 +112,31 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
             Init
           </button>
           <button
+            className="form-button"
             type="submit"
             disabled={startTimeStamp === null || logsData[i].title === ""}
           >
             Done
           </button>
+          <button
+            className="form-button"
+            disabled={startTimeStamp === null}
+            onClick={cancel}
+          >
+            Cancel
+          </button>
         </div>
+        <div className="add-remove-buttons">
+          <button onClick={(event) => addLogData(event)}>+</button>
+          <button
+            onClick={(event) => removeLogData(event)}
+            disabled={logsData.length === 1}
+          >
+            -
+          </button>
+        </div>
+        {!!message && <p className="message">{message}</p>}
       </form>
-      <div className="add-remove-buttons">
-        <button onClick={addLogData}>+</button>
-        <button onClick={removeLogData} disabled={logsData.length === 1}>
-          -
-        </button>
-        <p className="message">{message}</p>
-      </div>
     </>
   );
 }
