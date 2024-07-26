@@ -71,7 +71,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     if (!message) return;
     const timer = setTimeout(() => {
       setMessage("");
-    }, 1 * 60 * 60 * 1000);
+    }, 5 * 60 * 1000);
 
     return () => {
       clearTimeout(timer);
