@@ -58,7 +58,8 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     );
   };
 
-  const clearDescription = function () {
+  const clearDescription = function (event) {
+    event.preventDefault();
     setLogsData((logsData) =>
       logsData.map((logData, idx) =>
         idx !== i ? logData : { ...logData, description: "" }
@@ -99,7 +100,10 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
             value={logsData[i].description}
             onChange={(event) => changeDescription(event)}
           />
-          <button className="form-item-button" onClick={clearDescription}>
+          <button
+            className="form-item-button"
+            onClick={(event) => clearDescription(event)}
+          >
             Clear
           </button>
         </div>
