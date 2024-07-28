@@ -36,11 +36,13 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
       endTimeStamp: new Date(),
     };
     try {
-      const newLogRef = await addDoc(collection(db, "daily-log-24"), newLog);
+      const logsCol = collection(db, "daily-log-24");
+      const newLogRef = await addDoc(logsCol, newLog);
       console.log(`Document written with id ${newLogRef.id}`);
       setMessage(`Document written with id ${newLogRef.id}`);
     } catch (err) {
       console.log("Error adding document: " + err);
+      setMessage(err.message);
     } finally {
       setStartTimeStamp(null);
     }

@@ -1,7 +1,9 @@
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { db } from "../libs/firebase";
+import { signInWithGoogle, signOutWithGoogle } from "../libs/firebase";
 
-function Display({ db }) {
+function Display() {
   const [date, setDate] = useState("");
   const [month, setMonth] = useState("");
   const [displayedLogs, setDisplayedLogs] = useState([]);
@@ -116,6 +118,10 @@ function Display({ db }) {
 
   return (
     <div className="display">
+      <nav className="nav nav-auth">
+        <button onClick={signInWithGoogle}>Google</button>
+        <button onClick={signOutWithGoogle}>Sign Out</button>
+      </nav>
       <div className="date-area">
         <div className="date-item">
           <button onClick={yesterday}>Yesterday...</button>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Form from "./Form";
+import { db } from "../libs/firebase";
 
-function Forms({ db }) {
+function Forms() {
   const [logsData, setLogsData] = useState([
     {
       title: "",
@@ -29,7 +30,7 @@ function Forms({ db }) {
 
   return (
     <div className="forms">
-      {logsData.map((logData, i) => (
+      {logsData.map((_, i) => (
         <Form
           i={i}
           db={db}

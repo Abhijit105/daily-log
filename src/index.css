@@ -35,6 +35,7 @@ body {
   align-items: flex-end;
   border-left: 0.5px solid #212529;
   padding: 2em;
+  gap: 1em;
 }
 
 .form {
@@ -73,6 +74,13 @@ body {
 
 .add-remove-buttons {
   display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 1em;
 }
