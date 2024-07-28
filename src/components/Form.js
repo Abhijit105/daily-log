@@ -139,7 +139,11 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
             -
           </button>
         </div>
-        {!!message && <p className="message">{message}</p>}
+        {!!message ? (
+          <p className="message">{message}</p>
+        ) : (
+          !!startTimeStamp && <span className="loader"></span>
+        )}
       </form>
     </>
   );

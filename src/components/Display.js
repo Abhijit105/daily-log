@@ -6,6 +6,7 @@ function Display({ db }) {
   const [month, setMonth] = useState("");
   const [displayedLogs, setDisplayedLogs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoadingLogs, setIsLoadingLogs] = useState(false);
 
   const yesterday = async function () {
     const now = new Date();
@@ -16,6 +17,7 @@ function Display({ db }) {
     let plusOne = new Date();
     plusOne.setTime(yesterday.getTime() + 24 * 60 * 60 * 1000);
     try {
+      setIsLoadingLogs(true);
       const logsCol = collection(db, "daily-log-24");
       const logsSnapshot = await getDocs(logsCol);
       const logsList = logsSnapshot.docs.map((doc) => doc.data());
@@ -28,6 +30,8 @@ function Display({ db }) {
     } catch (err) {
       console.log("Error reading document" + err);
       setErrorMessage(err.message);
+    } finally {
+      setIsLoadingLogs(false);
     }
   };
 
@@ -40,6 +44,7 @@ function Display({ db }) {
         now.getDate()
       );
       try {
+        setIsLoadingLogs(true);
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
@@ -51,6 +56,8 @@ function Display({ db }) {
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);
+      } finally {
+        setIsLoadingLogs(false);
       }
     } else if (!month) {
       const now = new Date();
@@ -58,6 +65,7 @@ function Display({ db }) {
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
+        setIsLoadingLogs(true);
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
@@ -70,6 +78,8 @@ function Display({ db }) {
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);
+      } finally {
+        setIsLoadingLogs(false);
       }
     } else {
       const now = new Date();
@@ -77,6 +87,7 @@ function Display({ db }) {
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
+        setIsLoadingLogs(true);
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => doc.data());
@@ -89,6 +100,8 @@ function Display({ db }) {
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);
+      } finally {
+        setIsLoadingLogs(false);
       }
     }
   };
@@ -131,29 +144,33 @@ function Display({ db }) {
           <button onClick={go}>GO</button>
         </div>
       </div>
-      <div className="displayed-logs">
-        {displayedLogs
-          .sort(
-            (a, b) =>
-              a.startTimeStamp.toDate().getTime() -
-              b.startTimeStamp.toDate().getTime()
-          )
-          .map((log, i) => (
-            <div className="displayed-log" key={i}>
-              <div>
-                <h3>{i + 1}. </h3>
+      {isLoadingLogs ? (
+        <span className="loader"></span>
+      ) : (
+        <div className="displayed-logs">
+          {displayedLogs
+            .sort(
+              (a, b) =>
+                a.startTimeStamp.toDate().getTime() -
+                b.startTimeStamp.toDate().getTime()
+            )
+            .map((log, i) => (
+              <div className="displayed-log" key={i}>
+                <div>
+                  <h3>{i + 1}. </h3>
+                </div>
+                <div>
+                  <h3>{log.title}</h3>
+                  <p>{log.description}</p>
+                  <h5>
+                    Start: {log.startTimeStamp.toDate().toLocaleString()} End:{" "}
+                    {log.endTimeStamp.toDate().toLocaleString()}
+                  </h5>
+                </div>
               </div>
-              <div>
-                <h3>{log.title}</h3>
-                <p>{log.description}</p>
-                <h5>
-                  Start: {log.startTimeStamp.toDate().toLocaleString()} End:{" "}
-                  {log.endTimeStamp.toDate().toLocaleString()}
-                </h5>
-              </div>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      )}
       <p className="message">{errorMessage}</p>
     </div>
   );
