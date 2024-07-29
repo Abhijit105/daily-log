@@ -58,6 +58,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { logData, title: "" }
       )
     );
+    document.getElementById("title").focus();
   };
 
   const clearDescription = function (event) {
@@ -67,6 +68,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { ...logData, description: "" }
       )
     );
+    document.getElementById("description").focus();
   };
 
   useEffect(() => {
@@ -87,6 +89,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         <div className="form-item">
           <label className="form-item-label">Title: </label>
           <input
+            id="title"
             className="form-item-input"
             value={logsData[i].title}
             onChange={(event) => changeTitle(event)}
@@ -98,6 +101,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         <div className="form-item">
           <label className="form-item-label">Description: </label>
           <textarea
+            id="description"
             className="form-item-textarea"
             value={logsData[i].description}
             onChange={(event) => changeDescription(event)}
@@ -141,11 +145,8 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
             -
           </button>
         </div>
-        {!!message ? (
-          <p className="message">{message}</p>
-        ) : (
-          !!startTimeStamp && <span className="loader"></span>
-        )}
+        {!!startTimeStamp && <span className="loader"></span>}
+        {!!message && <p className="message">{message}</p>}
       </form>
     </>
   );
