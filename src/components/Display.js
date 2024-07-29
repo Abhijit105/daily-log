@@ -29,6 +29,7 @@ function Display() {
           log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
       );
       setDisplayedLogs(logsYesterday.reverse());
+      setErrorMessage("");
     } catch (err) {
       console.log("Error reading document" + err);
       setErrorMessage(err.message);
@@ -55,6 +56,7 @@ function Display() {
             log.startTimeStamp?.toDate().getTime() >= currentDate.getTime()
         );
         setDisplayedLogs(logsToday.reverse());
+        setErrorMessage("");
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);
@@ -77,6 +79,7 @@ function Display() {
             log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
         );
         setDisplayedLogs(logsEnteredDate.reverse());
+        setErrorMessage("");
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);
@@ -99,6 +102,7 @@ function Display() {
             log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
         );
         setDisplayedLogs(logsEnteredDate.reverse());
+        setErrorMessage("");
       } catch (err) {
         console.log("Error reading document:" + err);
         setErrorMessage(err.message);

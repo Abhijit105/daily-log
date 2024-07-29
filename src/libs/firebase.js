@@ -28,6 +28,9 @@ export const db = getFirestore(app);
 export const signInWithGoogle = async function () {
   try {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
     const auth = getAuth();
     const result = await signInWithPopup(auth, provider);
     console.log(result.user.email);
