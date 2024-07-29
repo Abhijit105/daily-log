@@ -35,13 +35,13 @@ body {
   align-items: flex-end;
   border-left: 0.5px solid #212529;
   padding: 2em;
-  gap: 1em;
+  gap: 2em;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2em;
   justify-content: flex-start;
 }
 
