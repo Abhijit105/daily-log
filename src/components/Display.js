@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../libs/firebase";
 import { signInWithGoogle, signOutWithGoogle } from "../libs/firebase";
 import UpdateModal from "./UpdateModal";
+import DeleteModal from "./DeleteModal";
 
 function Display() {
   const [date, setDate] = useState("");
@@ -12,6 +13,8 @@ function Display() {
   const [isLoadingLogs, setIsLoadingLogs] = useState(false);
   const [displayUpdateModal, setDisplayUpdateModal] = useState(false);
   const [logToBeUpdated, setLogToBeUpdated] = useState(null);
+  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+  const [logToBeDeleted, setLogToBeDeleted] = useState(null);
 
   const openUpdateModal = function (selectedLog) {
     setDisplayUpdateModal(true);
@@ -20,6 +23,15 @@ function Display() {
 
   const closeUpdateModal = function () {
     setDisplayUpdateModal(false);
+  };
+
+  const openDeleteModal = function (selectedLog) {
+    setDisplayDeleteModal(true);
+    setLogToBeDeleted(selectedLog);
+  };
+
+  const closeDeleteModal = function () {
+    setDisplayDeleteModal(false);
   };
 
   const yesterday = async function () {
@@ -202,8 +214,9 @@ function Display() {
                       {log.endTimeStamp.toDate().toLocaleString()}
                     </h5>
                   </div>
-                  <div>
+                  <div className="action-buttons">
                     <button onClick={() => openUpdateModal(log)}>Update</button>
+                    <button onClick={() => openDeleteModal(log)}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -213,6 +226,9 @@ function Display() {
       </div>
       {displayUpdateModal && (
         <UpdateModal onClose={closeUpdateModal} log={logToBeUpdated} />
+      )}
+      {displayDeleteModal && (
+        <DeleteModal onClose={closeDeleteModal} log={logToBeDeleted} />
       )}
     </>
   );

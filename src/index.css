@@ -113,6 +113,13 @@ body {
   gap: 1em;
 }
 
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: flex-end;
+}
+
 .modal {
   position: absolute;
   top: 50%;
