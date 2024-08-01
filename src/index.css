@@ -113,6 +113,26 @@ body {
   gap: 1em;
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f8f9fa;
+  color: #212529;
+  z-index: 1;
+  padding: 2em;
+}
+
+.overlay {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  background-color: #212529;
+  top: 0;
+  left: 0;
+}
+
 .loader {
   width: 12px;
   height: 12px;
