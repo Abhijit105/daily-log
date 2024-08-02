@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../libs/firebase";
 import { signInWithGoogle, signOutWithGoogle } from "../libs/firebase";
@@ -155,6 +155,32 @@ function Display() {
 
     return () => clearTimeout(timer);
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (!displayUpdateModal) return;
+    const unsubscribe = onSnapshot(
+      doc(db, "daily-log-24", logToBeUpdated.id),
+      (doc) =>
+        setDisplayedLogs((displayedLogs) =>
+          displayedLogs.map((log) =>
+            log.id !== logToBeUpdated.id ? log : { ...log, ...doc.data() }
+          )
+        )
+    );
+    return () => unsubscribe();
+  }, [displayUpdateModal, logToBeUpdated?.id]);
+
+  useEffect(() => {
+    if (!displayDeleteModal) return;
+    const unsubscribe = onSnapshot(
+      doc(db, "daily-log-24", logToBeDeleted.id),
+      (doc) =>
+        setDisplayedLogs((displayedLogs) =>
+          displayedLogs.filter((log) => log.id !== logToBeDeleted.id)
+        )
+    );
+    return () => unsubscribe();
+  }, [displayDeleteModal, logToBeDeleted?.id]);
 
   return (
     <>
