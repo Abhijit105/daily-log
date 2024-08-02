@@ -146,32 +146,17 @@ body {
   left: 0;
 }
 
+/* HTML: <div class="loader"></div> */
 .loader {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: block;
-  margin: 15px auto;
-  position: relative;
-  color: #212529;
-  box-sizing: border-box;
-  animation: animloader 2s linear infinite;
+  /* width: 600px; */
+  aspect-ratio: 90;
+  background: radial-gradient(circle closest-side, #212529 90%, #0000) 0 /
+    calc(100% / 30) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 6s steps(31) infinite;
 }
-
-@keyframes animloader {
-  0% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  25% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
-  }
-  50% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
-  }
-  75% {
-    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  100% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+@keyframes l1 {
+  to {
+    clip-path: inset(0 -34% 0 0);
   }
 }

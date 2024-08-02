@@ -82,6 +82,18 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     };
   }, [message]);
 
+  useEffect(() => {
+    if (!startTimeStamp) return;
+    const screenWidthListener = function () {
+      const loaderWidth = window.innerWidth * 0.6 - 40;
+      document.querySelector(".loader").style.width = loaderWidth;
+    };
+    window.addEventListener("resize", screenWidthListener);
+    return () => {
+      window.removeEventListener("resize", screenWidthListener);
+    };
+  }, [startTimeStamp]);
+
   return (
     <>
       <h2>Hello daily-log</h2>
@@ -145,7 +157,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
             -
           </button>
         </div>
-        {!!startTimeStamp && <span className="loader"></span>}
+        {!!startTimeStamp && <div className="loader"></div>}
         {!!message && <p className="message">{message}</p>}
       </form>
     </>
