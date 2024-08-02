@@ -20,7 +20,7 @@ function DeleteModal({ onClose, log }) {
 
   return (
     <>
-      <div className="modal">
+      <div className="modal delete-modal">
         <form className="form" onSubmit={(event) => deleteData(event, log.id)}>
           <p>Are you sure you want to delete?</p>
           <div className="form-item">

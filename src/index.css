@@ -131,11 +131,16 @@ body {
   padding: 2em;
 }
 
+.update-modal {
+  width: 66%;
+}
+
 .overlay {
   height: 100vh;
   width: 100%;
   position: absolute;
-  background-color: #212529;
+  background-color: rgba(33, 37, 41, 0.66);
+  backdrop-filter: blur(2px);
   top: 0;
   left: 0;
 }

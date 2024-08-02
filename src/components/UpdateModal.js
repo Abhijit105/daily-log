@@ -25,7 +25,7 @@ function UpdateModal({ onClose, log }) {
 
   return (
     <>
-      <div className="modal">
+      <div className="modal update-modal">
         <form className="form" onSubmit={(event) => updateData(event, log.id)}>
           <div className="form-item">
             <label className="form-item-label">Title: </label>
