@@ -298,7 +298,7 @@
   background-color: var(--violet-light) !important;
 }
 
-.violet-light {
+.violet-dark {
   background-color: var(--violet-dark) !important;
 }
 
@@ -330,7 +330,7 @@
   background-color: var(--teal-light) !important;
 }
 
-.teal-light {
+.teal-dark {
   background-color: var(--teal-dark) !important;
 }
 
