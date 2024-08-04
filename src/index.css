@@ -36,6 +36,7 @@
   --backdrop: #212529a8;
   --border: #495057;
   --accent: #ced4da;
+  --highlight: #dee2e6;
 }
 
 [data-theme="gray-dark"] {
@@ -45,6 +46,7 @@
   --backdrop: #f8f9faa8;
   --border: #e9ecef;
   --accent: #adb5bd;
+  --highlight: #868e96;
 }
 
 [data-theme="red-light"] {
@@ -54,6 +56,7 @@
   --backdrop: #c92a2aa8;
   --border: #f03e3e;
   --accent: #ff8787;
+  --highlight: #ffa8a8;
 }
 
 [data-theme="red-dark"] {
@@ -63,6 +66,7 @@
   --backdrop: #fff5f5a8;
   --border: #ffc9c9;
   --accent: #ff6b6b;
+  --highlight: #fa5252;
 }
 
 [data-theme="pink-light"] {
@@ -72,6 +76,7 @@
   --backdrop: #a61e4da8;
   --border: #d6336c;
   --accent: #f783ac;
+  --highlight: #faa2c1;
 }
 
 [data-theme="pink-dark"] {
@@ -81,6 +86,7 @@
   --backdrop: #fff0f6a8;
   --border: #fcc2d7;
   --accent: #f06595;
+  --highlight: #e64980;
 }
 
 [data-theme="grape-light"] {
@@ -90,6 +96,7 @@
   --backdrop: #862e9ca8;
   --border: #ae3ec9;
   --accent: #da77f2;
+  --highlight: #e599f7;
 }
 
 [data-theme="grape-dark"] {
@@ -99,6 +106,7 @@
   --backdrop: #f8f0fca8;
   --border: #eebefa;
   --accent: #cc5de8;
+  --highlight: #be4bdb;
 }
 
 [data-theme="violet-light"] {
@@ -108,6 +116,7 @@
   --backdrop: #5f3dc4a8;
   --border: #7048e8;
   --accent: #9775fa;
+  --highlight: #b197fc;
 }
 
 [data-theme="violet-dark"] {
@@ -117,6 +126,7 @@
   --backdrop: #f3f0ffa8;
   --border: #d0bfff;
   --accent: #845ef7;
+  --highlight: #7950f2;
 }
 
 [data-theme="indigo-light"] {
@@ -126,6 +136,7 @@
   --backdrop: #364fc7a8;
   --border: #4263eb;
   --accent: #748ffc;
+  --highlight: #91a7ff;
 }
 
 [data-theme="indigo-dark"] {
@@ -135,6 +146,7 @@
   --backdrop: #edf2ffa8;
   --border: #bac8ff;
   --accent: #5c7cfa;
+  --highlight: #4c6ef5;
 }
 
 [data-theme="blue-light"] {
@@ -144,6 +156,7 @@
   --backdrop: #1864aba8;
   --border: #1c7ed6;
   --accent: #4dabf7;
+  --highlight: #74c0fc;
 }
 
 [data-theme="blue-dark"] {
@@ -153,6 +166,7 @@
   --backdrop: #e7f5ffa8;
   --border: #a5d8ff;
   --accent: #339af0;
+  --highlight: #228be6;
 }
 
 [data-theme="cyan-light"] {
@@ -162,6 +176,7 @@
   --backdrop: #0b7285a8;
   --border: #1098ad;
   --accent: #3bc9db;
+  --highlight: #66d9e8;
 }
 
 [data-theme="cyan-dark"] {
@@ -171,6 +186,7 @@
   --backdrop: #e3fafca8;
   --border: #99e9f2;
   --accent: #22b8cf;
+  --highlight: #15aabf;
 }
 
 [data-theme="teal-light"] {
@@ -180,6 +196,7 @@
   --backdrop: #087f5ba8;
   --border: #0ca678;
   --accent: #38d9a9;
+  --highlight: #63e6be;
 }
 
 [data-theme="teal-dark"] {
@@ -189,6 +206,7 @@
   --backdrop: #e6fcf5a8;
   --border: #96f2d7;
   --accent: #20c997;
+  --highlight: #12b886;
 }
 
 [data-theme="green-light"] {
@@ -198,6 +216,7 @@
   --backdrop: #2b8a3ea8;
   --border: #37b24d;
   --accent: #69db7c;
+  --highlight: #8ce99a;
 }
 
 [data-theme="green-dark"] {
@@ -207,6 +226,7 @@
   --backdrop: #ebfbeea8;
   --border: #b2f2bb;
   --accent: #51cf66;
+  --highlight: #40c057;
 }
 
 [data-theme="lime-light"] {
@@ -216,6 +236,7 @@
   --backdrop: #5c940da8;
   --border: #74b816;
   --accent: #a9e34b;
+  --highlight: #c0eb75;
 }
 
 [data-theme="lime-dark"] {
@@ -225,6 +246,7 @@
   --backdrop: #f4fce3a8;
   --border: #d8f5a2;
   --accent: #94d82d;
+  --highlight: #82c91e;
 }
 
 [data-theme="yellow-light"] {
@@ -234,6 +256,7 @@
   --backdrop: #e67700a8;
   --border: #f59f00;
   --accent: #ffd43b;
+  --highlight: #ffe066;
 }
 
 [data-theme="yellow-dark"] {
@@ -243,6 +266,7 @@
   --backdrop: #fff9dba8;
   --border: #ffec99;
   --accent: #fcc419;
+  --highlight: #fab005;
 }
 [data-theme="orange-light"] {
   --bgprimary: #fff4e6;
@@ -251,6 +275,7 @@
   --backdrop: #d9480fa8;
   --border: #f76707;
   --accent: #ffa94d;
+  --highlight: #ffc078;
 }
 
 [data-theme="orange-dark"] {
@@ -260,6 +285,7 @@
   --backdrop: #fff4e6a8;
   --border: #ffd8a8;
   --accent: #ff922b;
+  --highlight: #fd7e14;
 }
 
 .gray-light {
@@ -409,6 +435,7 @@ body {
   flex-direction: column;
   gap: 2rem;
   justify-content: flex-start;
+  padding: 2rem;
 }
 
 .form-item {
@@ -471,6 +498,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 2rem;
 }
 
 .displayed-log {
@@ -480,6 +508,7 @@ body {
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
+  padding: 2rem;
 }
 
 .action-buttons {
@@ -533,6 +562,7 @@ body {
 .lds-circle div {
   box-sizing: border-box;
 }
+
 .lds-circle {
   display: inline-block;
   transform: translateZ(1px) translateX(-50%) translateY(-50%);
@@ -540,6 +570,7 @@ body {
   top: 50%;
   left: 50%;
 }
+
 .lds-circle > div {
   display: inline-block;
   width: 64px;
@@ -549,6 +580,7 @@ body {
   border-radius: 50%;
   animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
+
 @keyframes lds-circle {
   0%,
   100% {
@@ -577,6 +609,8 @@ textarea {
   color: var(--text);
   line-height: 1.5;
   font-weight: 400;
+  border-color: var(--border);
+  border-width: 1px;
 }
 
 button {
@@ -604,4 +638,15 @@ button:active {
 
 button:disabled {
   opacity: 0.7;
+}
+
+form:hover,
+input:hover,
+input:focus,
+textarea:hover,
+textarea:focus,
+button:hover,
+.displayed-logs:hover,
+.displayed-log:hover {
+  box-shadow: 0 0 15px 10px var(--highlight);
 }
