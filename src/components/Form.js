@@ -58,7 +58,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { logData, title: "" }
       )
     );
-    document.getElementById("title").focus();
+    document.getElementById(`title-${i}`).focus();
   };
 
   const clearDescription = function (event) {
@@ -68,7 +68,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { ...logData, description: "" }
       )
     );
-    document.getElementById("description").focus();
+    document.getElementById(`description-${i}`).focus();
   };
 
   useEffect(() => {
@@ -101,7 +101,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         <div className="form-item">
           <label className="form-item-label">Title: </label>
           <input
-            id="title"
+            id={`title-${i}`}
             className="form-item-input"
             value={logsData[i].title}
             onChange={(event) => changeTitle(event)}
@@ -113,7 +113,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         <div className="form-item">
           <label className="form-item-label">Description: </label>
           <textarea
-            id="description"
+            id={`description-${i}`}
             className="form-item-textarea"
             value={logsData[i].description}
             onChange={(event) => changeDescription(event)}
