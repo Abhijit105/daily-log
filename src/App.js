@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Display from "./components/Display";
 import Forms from "./components/Forms";
 
@@ -20,27 +20,24 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!localTheme) return;
-    if (localTheme.split("-")[1] === "auto") setDisplayGlobalTheme(true);
-    else setDisplayGlobalTheme(false);
-  }, [localTheme]);
-
-  useEffect(() => {
-    if (!displayGlobalTheme) return;
+    setDisplayGlobalTheme(localTheme.split("-")[1] === "auto");
     setGlobalTheme(
       window.matchMedia("(prefers-color-scheme: dark)").matches
         ? `${localTheme.split("-")[0]}-dark`
         : `${localTheme.split("-")[0]}-light`
     );
-    const autoThemeSwitcher = function () {
-      setGlobalTheme(
-        `${localTheme.split("-")[0]}-${
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light"
+  }, [localTheme]);
+
+  const autoThemeSwitcher = useCallback(function (event) {
+    setGlobalTheme(
+      (globalTheme) =>
+        `${globalTheme.split("-")[0]}-${
+          event.target.matches ? "dark" : "light"
         }`
-      );
-    };
+    );
+  }, []);
+
+  useEffect(() => {
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", autoThemeSwitcher);
@@ -49,9 +46,9 @@ function App() {
         .matchMedia("(prefers-color-scheme: dark")
         .removeEventListener("change", autoThemeSwitcher);
     };
-  }, [displayGlobalTheme, localTheme]);
+  }, [autoThemeSwitcher]);
 
-  if (!localTheme)
+  if (!localTheme || !globalTheme)
     return (
       <div className="lds-circle">
         <div></div>
