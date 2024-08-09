@@ -30,8 +30,8 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     event.preventDefault();
     if (!logsData[i].title) return;
     const newLog = {
-      title: logsData[i].title,
-      description: logsData[i].description,
+      title: logsData[i].title ?? "",
+      description: logsData[i].description ?? "",
       startTimeStamp,
       endTimeStamp: new Date(),
     };
