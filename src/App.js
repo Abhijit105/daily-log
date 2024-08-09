@@ -3,26 +3,55 @@ import Display from "./components/Display";
 import Forms from "./components/Forms";
 
 function App() {
-  const [theme, setTheme] = useState("");
+  const [localTheme, setLocalTheme] = useState("");
+  const [displayGlobalTheme, setDisplayGlobalTheme] = useState(false);
+  const [globalTheme, setGlobalTheme] = useState("");
 
   const handleChangeTheme = function (selectedColor, selectedMode) {
-    setTheme([selectedColor, selectedMode].join("-"));
-    localStorage.setItem(
-      "theme",
-      JSON.stringify([selectedColor, selectedMode].join("-"))
-    );
+    const selectedTheme = [selectedColor, selectedMode].join("-");
+    localStorage.setItem("theme", JSON.stringify(selectedTheme));
+    setLocalTheme(selectedTheme);
   };
-
-  console.log(document.querySelector(".main"));
-  console.log(theme);
 
   useEffect(() => {
     const selectedTheme =
       JSON.parse(localStorage.getItem("theme")) ?? "gray-light";
-    setTheme(selectedTheme);
+    setLocalTheme(selectedTheme);
   }, []);
 
-  if (!theme)
+  useEffect(() => {
+    if (!localTheme) return;
+    if (localTheme.split("-")[1] === "auto") setDisplayGlobalTheme(true);
+    else setDisplayGlobalTheme(false);
+  }, [localTheme]);
+
+  useEffect(() => {
+    if (!displayGlobalTheme) return;
+    setGlobalTheme(
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? `${localTheme.split("-")[0]}-dark`
+        : `${localTheme.split("-")[0]}-light`
+    );
+    const autoThemeSwitcher = function () {
+      setGlobalTheme(
+        `${localTheme.split("-")[0]}-${
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+        }`
+      );
+    };
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", autoThemeSwitcher);
+    return () => {
+      window
+        .matchMedia("(prefers-color-scheme: dark")
+        .removeEventListener("change", autoThemeSwitcher);
+    };
+  }, [displayGlobalTheme, localTheme]);
+
+  if (!localTheme)
     return (
       <div className="lds-circle">
         <div></div>
@@ -33,15 +62,17 @@ function App() {
     <>
       <main
         className="main"
-        data-theme={
-          theme.endsWith("auto")
-            ? window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? `${theme.split("-")[0]}-dark`
-              : `${theme.split("-")[0]}-light`
-            : theme
-        }
+        data-theme={displayGlobalTheme ? globalTheme : localTheme}
       >
-        <Forms theme={theme} onTheme={handleChangeTheme} />
+        <Forms
+          localTheme={localTheme}
+          onTheme={handleChangeTheme}
+          mode={
+            displayGlobalTheme
+              ? globalTheme.split("-")[1]
+              : localTheme.split("-")[1]
+          }
+        />
         <Display />
       </main>
     </>

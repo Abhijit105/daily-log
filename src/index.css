@@ -592,7 +592,7 @@ body {
   width: 64px;
   height: 64px;
   margin: 8px;
-  background: currentColor;
+  background: var(--backdrop);
   border-radius: 50%;
   animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }

@@ -1,18 +1,12 @@
 import { useState } from "react";
 
-function ColorContainer({ theme, color, onColorHandler }) {
+function ColorContainer({ mode, color, onColorHandler }) {
   const [displayTooltip, setDisplayTooltip] = useState(false);
 
   return (
     <div className="color-container">
       <button
-        className={`${color}-${
-          theme.split("-")[1] === "auto"
-            ? window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light"
-            : theme.split("-")[1]
-        }`}
+        className={`${color}-${mode}`}
         data-color={color}
         onClick={onColorHandler}
         onMouseOver={() => setDisplayTooltip(true)}

@@ -4,7 +4,7 @@ import { db } from "../libs/firebase";
 import { COLORS } from "../config/config";
 import ColorContainer from "./ColorContainer";
 
-function Forms({ theme, onTheme }) {
+function Forms({ localTheme, onTheme, mode }) {
   const [logsData, setLogsData] = useState([
     {
       title: "",
@@ -31,11 +31,11 @@ function Forms({ theme, onTheme }) {
   };
 
   const changeColorHandler = function (event) {
-    onTheme(event.target.dataset.color, theme.split("-")[1]);
+    onTheme(event.target.dataset.color, localTheme.split("-")[1]);
   };
 
   const changeModeHandler = function (event) {
-    onTheme(theme.split("-")[0], event.target.dataset.mode);
+    onTheme(localTheme.split("-")[0], event.target.dataset.mode);
   };
 
   return (
@@ -55,10 +55,10 @@ function Forms({ theme, onTheme }) {
             key={i}
             onColorHandler={changeColorHandler}
             color={color}
-            theme={theme}
+            mode={mode}
           />
         ))}
-        {true && <button>{theme.toLocaleUpperCase()}</button>}
+        {true && <button>{localTheme.toLocaleUpperCase()}</button>}
       </nav>
       {logsData.map((_, i) => (
         <Form
