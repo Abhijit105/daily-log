@@ -93,35 +93,13 @@ function Display() {
       } finally {
         setIsLoadingLogs(false);
       }
-    } else if (!month) {
-      const now = new Date();
-      const enteredDate = new Date(now.getFullYear(), now.getMonth(), date);
-      let plusOne = new Date();
-      plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
-      try {
-        setIsLoadingLogs(true);
-        const logsCol = collection(db, "daily-log-24");
-        const logsSnapshot = await getDocs(logsCol);
-        const logsList = logsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        const logsEnteredDate = logsList.filter(
-          (log) =>
-            log.startTimeStamp?.toDate().getTime() >= enteredDate.getTime() &&
-            log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
-        );
-        setDisplayedLogs(logsEnteredDate.reverse());
-        setErrorMessage("");
-      } catch (err) {
-        console.log("Error reading document:" + err);
-        setErrorMessage(err.message);
-      } finally {
-        setIsLoadingLogs(false);
-      }
     } else {
       const now = new Date();
-      const enteredDate = new Date(now.getFullYear(), month - 1, date);
+      const enteredDate = new Date(
+        now.getFullYear(),
+        !!month ? month - 1 : now.getMonth(),
+        date ?? ""
+      );
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
