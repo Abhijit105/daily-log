@@ -160,6 +160,8 @@ function Display() {
     return () => unsubscribe();
   }, [displayDeleteModal, logToBeDeleted?.id]);
 
+  console.log(isLoadingLogs);
+
   return (
     <>
       <div className="display">
@@ -197,42 +199,47 @@ function Display() {
         </div>
         {isLoadingLogs ? (
           <span className="loader"></span>
+        ) : !errorMessage ? (
+          !!displayedLogs && displayedLogs.length !== 0 ? (
+            <div className="displayed-logs">
+              {
+                !displayedLogs
+                  .sort(
+                    (a, b) =>
+                      a.startTimeStamp.toDate().getTime() -
+                      b.startTimeStamp.toDate().getTime()
+                  )
+                  .map((log, i) => (
+                    <div className="displayed-log" key={i}>
+                      <div>
+                        <h3>{i + 1}. </h3>
+                      </div>
+                      <div>
+                        <h3>{log.title}</h3>
+                        <p>{log.description}</p>
+                        <h5>
+                          Start: {log.startTimeStamp.toDate().toLocaleString()}{" "}
+                          End: {log.endTimeStamp.toDate().toLocaleString()}
+                        </h5>
+                      </div>
+                      <div className="action-buttons">
+                        <button onClick={() => openUpdateModal(log)}>
+                          Update
+                        </button>
+                        <button onClick={() => openDeleteModal(log)}>
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))
+              }
+            </div>
+          ) : (
+            <div className="displayed-logs">Nothing to display</div>
+          )
         ) : (
-          <div className="displayed-logs">
-            {!!displayedLogs &&
-              displayedLogs.length !== 0 &&
-              displayedLogs
-                .sort(
-                  (a, b) =>
-                    a.startTimeStamp.toDate().getTime() -
-                    b.startTimeStamp.toDate().getTime()
-                )
-                .map((log, i) => (
-                  <div className="displayed-log" key={i}>
-                    <div>
-                      <h3>{i + 1}. </h3>
-                    </div>
-                    <div>
-                      <h3>{log.title}</h3>
-                      <p>{log.description}</p>
-                      <h5>
-                        Start: {log.startTimeStamp.toDate().toLocaleString()}{" "}
-                        End: {log.endTimeStamp.toDate().toLocaleString()}
-                      </h5>
-                    </div>
-                    <div className="action-buttons">
-                      <button onClick={() => openUpdateModal(log)}>
-                        Update
-                      </button>
-                      <button onClick={() => openDeleteModal(log)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-          </div>
+          errorMessage && <p className="message">{errorMessage}</p>
         )}
-        <p className="message">{errorMessage}</p>
       </div>
       {displayUpdateModal && (
         <UpdateModal onClose={closeUpdateModal} log={logToBeUpdated} />
