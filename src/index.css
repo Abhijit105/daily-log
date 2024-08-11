@@ -306,6 +306,7 @@ body {
   align-items: stretch;
   background-color: var(--bgprimary);
   height: 100vh;
+  letter-spacing: 1px;
 }
 
 .forms {
@@ -491,7 +492,7 @@ body {
 }
 
 .form-item-label {
-  width: 6rem;
+  width: 8rem;
   display: inline-block;
 }
 
@@ -661,6 +662,7 @@ textarea {
   border-color: var(--border);
   border-width: 1px;
   border-radius: 0.5rem;
+  letter-spacing: 1px;
 }
 
 button {
@@ -675,6 +677,7 @@ button {
   min-width: 2em;
   height: 2em;
   border-radius: 0.5rem;
+  letter-spacing: 1px;
 }
 
 button:hover {

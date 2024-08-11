@@ -44,6 +44,7 @@ function Display() {
     plusOne.setTime(yesterday.getTime() + 24 * 60 * 60 * 1000);
     try {
       setIsLoadingLogs(true);
+      setErrorMessage("");
       const logsCol = collection(db, "daily-log-24");
       const logsSnapshot = await getDocs(logsCol);
       const logsList = logsSnapshot.docs.map((doc) => ({
@@ -75,6 +76,7 @@ function Display() {
       );
       try {
         setIsLoadingLogs(true);
+        setErrorMessage("");
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => ({
@@ -104,6 +106,7 @@ function Display() {
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
         setIsLoadingLogs(true);
+        setErrorMessage("");
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => ({
@@ -160,7 +163,7 @@ function Display() {
     return () => unsubscribe();
   }, [displayDeleteModal, logToBeDeleted?.id]);
 
-  console.log(isLoadingLogs);
+  console.log(errorMessage);
 
   return (
     <>
@@ -202,43 +205,41 @@ function Display() {
         ) : !errorMessage ? (
           !!displayedLogs && displayedLogs.length !== 0 ? (
             <div className="displayed-logs">
-              {
-                !displayedLogs
-                  .sort(
-                    (a, b) =>
-                      a.startTimeStamp.toDate().getTime() -
-                      b.startTimeStamp.toDate().getTime()
-                  )
-                  .map((log, i) => (
-                    <div className="displayed-log" key={i}>
-                      <div>
-                        <h3>{i + 1}. </h3>
-                      </div>
-                      <div>
-                        <h3>{log.title}</h3>
-                        <p>{log.description}</p>
-                        <h5>
-                          Start: {log.startTimeStamp.toDate().toLocaleString()}{" "}
-                          End: {log.endTimeStamp.toDate().toLocaleString()}
-                        </h5>
-                      </div>
-                      <div className="action-buttons">
-                        <button onClick={() => openUpdateModal(log)}>
-                          Update
-                        </button>
-                        <button onClick={() => openDeleteModal(log)}>
-                          Delete
-                        </button>
-                      </div>
+              {displayedLogs
+                .sort(
+                  (a, b) =>
+                    a.startTimeStamp.toDate().getTime() -
+                    b.startTimeStamp.toDate().getTime()
+                )
+                .map((log, i) => (
+                  <div className="displayed-log" key={i}>
+                    <div>
+                      <h3>{i + 1}. </h3>
                     </div>
-                  ))
-              }
+                    <div>
+                      <h3>{log.title}</h3>
+                      <p>{log.description}</p>
+                      <h5>
+                        Start: {log.startTimeStamp.toDate().toLocaleString()}{" "}
+                        End: {log.endTimeStamp.toDate().toLocaleString()}
+                      </h5>
+                    </div>
+                    <div className="action-buttons">
+                      <button onClick={() => openUpdateModal(log)}>
+                        Update
+                      </button>
+                      <button onClick={() => openDeleteModal(log)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
             </div>
           ) : (
             <div className="displayed-logs">Nothing to display</div>
           )
         ) : (
-          errorMessage && <p className="message">{errorMessage}</p>
+          <p className="message">{errorMessage}</p>
         )}
       </div>
       {displayUpdateModal && (
