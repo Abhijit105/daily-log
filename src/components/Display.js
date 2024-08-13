@@ -9,8 +9,8 @@ function Display() {
   const [date, setDate] = useState("");
   const [month, setMonth] = useState("");
   const [displayedLogs, setDisplayedLogs] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+  const [errorDisplayedLogs, setErrorDisplayedLogs] = useState("");
+  const [isLoadingDisplayedLogs, setIsLoadingDisplayedLogs] = useState(false);
   const [displayUpdateModal, setDisplayUpdateModal] = useState(false);
   const [logToBeUpdated, setLogToBeUpdated] = useState(null);
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
@@ -43,8 +43,8 @@ function Display() {
     let plusOne = new Date();
     plusOne.setTime(yesterday.getTime() + 24 * 60 * 60 * 1000);
     try {
-      setIsLoadingLogs(true);
-      setErrorMessage("");
+      setIsLoadingDisplayedLogs(true);
+      setErrorDisplayedLogs("");
       const logsCol = collection(db, "daily-log-24");
       const logsSnapshot = await getDocs(logsCol);
       const logsList = logsSnapshot.docs.map((doc) => ({
@@ -57,12 +57,11 @@ function Display() {
           log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
       );
       setDisplayedLogs(logsYesterday.reverse());
-      setErrorMessage("");
     } catch (err) {
       console.log("Error reading document" + err);
-      setErrorMessage(err.message);
+      setErrorDisplayedLogs(err.message);
     } finally {
-      setIsLoadingLogs(false);
+      setIsLoadingDisplayedLogs(false);
     }
   };
 
@@ -75,8 +74,8 @@ function Display() {
         now.getDate()
       );
       try {
-        setIsLoadingLogs(true);
-        setErrorMessage("");
+        setIsLoadingDisplayedLogs(true);
+        setErrorDisplayedLogs("");
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => ({
@@ -88,12 +87,11 @@ function Display() {
             log.startTimeStamp?.toDate().getTime() >= currentDate.getTime()
         );
         setDisplayedLogs(logsToday.reverse());
-        setErrorMessage("");
       } catch (err) {
         console.log("Error reading document:" + err);
-        setErrorMessage(err.message);
+        setErrorDisplayedLogs(err.message);
       } finally {
-        setIsLoadingLogs(false);
+        setIsLoadingDisplayedLogs(false);
       }
     } else {
       const now = new Date();
@@ -105,8 +103,8 @@ function Display() {
       let plusOne = new Date();
       plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000);
       try {
-        setIsLoadingLogs(true);
-        setErrorMessage("");
+        setIsLoadingDisplayedLogs(true);
+        setErrorDisplayedLogs("");
         const logsCol = collection(db, "daily-log-24");
         const logsSnapshot = await getDocs(logsCol);
         const logsList = logsSnapshot.docs.map((doc) => ({
@@ -119,23 +117,14 @@ function Display() {
             log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
         );
         setDisplayedLogs(logsEnteredDate.reverse());
-        setErrorMessage("");
       } catch (err) {
         console.log("Error reading document:" + err);
-        setErrorMessage(err.message);
+        setErrorDisplayedLogs(err.message);
       } finally {
-        setIsLoadingLogs(false);
+        setIsLoadingDisplayedLogs(false);
       }
     }
   };
-
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setErrorMessage("");
-    }, 5 * 60 * 1000);
-
-    return () => clearTimeout(timer);
-  }, [errorMessage]);
 
   useEffect(() => {
     if (!displayUpdateModal) return;
@@ -163,7 +152,7 @@ function Display() {
     return () => unsubscribe();
   }, [displayDeleteModal, logToBeDeleted?.id]);
 
-  console.log(errorMessage);
+  console.log(displayedLogs);
 
   return (
     <>
@@ -200,10 +189,10 @@ function Display() {
             <button onClick={go}>GO</button>
           </div>
         </div>
-        {isLoadingLogs ? (
-          <span className="loader"></span>
-        ) : !errorMessage ? (
-          !!displayedLogs && displayedLogs.length !== 0 ? (
+        {!errorDisplayedLogs ? (
+          isLoadingDisplayedLogs ? (
+            <span className="loader"></span>
+          ) : !!displayedLogs && displayedLogs.length !== 0 ? (
             <div className="displayed-logs">
               {displayedLogs
                 .sort(
@@ -236,10 +225,10 @@ function Display() {
                 ))}
             </div>
           ) : (
-            <div className="displayed-logs">Nothing to display</div>
+            <p className="message">Nothing to display</p>
           )
         ) : (
-          <p className="message">{errorMessage}</p>
+          <p className="message">{errorDisplayedLogs}</p>
         )}
       </div>
       {displayUpdateModal && (
