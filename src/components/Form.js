@@ -173,6 +173,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         {!!startTimeStamp && <div className="loader"></div>}
         {!!message && <p className="message">{message}</p>}
       </form>
+      <div className="divider"></div>
       {displayCreateModal && (
         <CreateModal
           onClose={closeCreateModal}

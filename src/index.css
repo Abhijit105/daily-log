@@ -319,6 +319,19 @@ body {
   gap: 2rem;
 }
 
+.forms::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.forms::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 5px;
+}
+
+.forms::-webkit-scrollbar-track {
+  background-color: var(--bgprimary);
+}
+
 .gray-light {
   background-color: var(--gray-light) !important;
   border-radius: 5px;
@@ -523,6 +536,10 @@ body {
   gap: 1rem;
 }
 
+.divider {
+  border-bottom: 1px solid var(--border);
+}
+
 .nav {
   display: flex;
   flex-direction: row;
@@ -555,6 +572,19 @@ body {
   padding: 2rem;
   border-radius: 5px;
   overflow-y: auto;
+}
+
+.displayed-logs::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.displayed-logs::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 5px;
+}
+
+.displayed-logs::-webkit-scrollbar-track {
+  background-color: var(--bgprimary);
 }
 
 .displayed-log {
@@ -595,7 +625,20 @@ body {
 .read-modal {
   width: auto;
   height: 66vh;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.read-modal::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.read-modal::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 5px;
+}
+
+.read-modal::-webkit-scrollbar-track {
+  background-color: var(--bgprimary);
 }
 
 .update-modal {
