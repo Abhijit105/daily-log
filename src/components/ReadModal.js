@@ -20,6 +20,11 @@ function ReadModal({
     return () => document.removeEventListener("keydown", escapeCloser);
   }, [escapeCloser, displayReadModal]);
 
+  useEffect(() => {
+    if (!displayedLogs) return;
+    if (displayedLogs.length === 0) onClose();
+  }, [displayedLogs, onClose]);
+
   return (
     <>
       <div className="modal read-modal">

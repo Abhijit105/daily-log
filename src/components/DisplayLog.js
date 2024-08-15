@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, doc, collection } from "firebase/firestore";
 import { db } from "../libs/firebase";
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
@@ -40,13 +40,16 @@ function DisplayLog({ i, log, setDisplayedLogs }) {
 
   useEffect(() => {
     if (!displayDeleteModal) return;
-    const unsubscribe = onSnapshot(doc(db, "daily-log-24", log.id), (doc) =>
+    console.log("called");
+    const unsubscribe = onSnapshot(collection(db, "daily-log-24"), (snapshot) =>
       setDisplayedLogs((displayedLogs) =>
-        displayedLogs.filter((displayedLog) => displayedLog.id !== log.id)
+        displayedLogs.filter((displayedLog) =>
+          snapshot.docs.map((doc) => doc.id).includes(displayedLog.id)
+        )
       )
     );
     return () => unsubscribe();
-  }, [displayDeleteModal, log?.id, setDisplayedLogs]);
+  }, [displayDeleteModal, setDisplayedLogs]);
 
   return (
     <>
@@ -63,8 +66,8 @@ function DisplayLog({ i, log, setDisplayedLogs }) {
           </h5>
         </div>
         <div className="action-buttons">
-          <button onClick={() => openUpdateModal(log)}>Update</button>
-          <button onClick={() => openDeleteModal(log)}>Delete</button>
+          <button onClick={openUpdateModal}>Update</button>
+          <button onClick={openDeleteModal}>Delete</button>
         </div>
       </div>
       {displayUpdateModal && (
