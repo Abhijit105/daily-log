@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
+import CreateModal from "./CreateModal";
 
 function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
   const [startTimeStamp, setStartTimeStamp] = useState(null);
   const [message, setMessage] = useState("");
+  const [displayCreateModal, setDisplayCreateModal] = useState(false);
 
   const changeTitle = function (event) {
     setLogsData((logsData) =>
@@ -71,6 +73,14 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     document.getElementById(`description-${i}`).focus();
   };
 
+  const openCreateModal = function () {
+    setDisplayCreateModal(true);
+  };
+
+  const closeCreateModal = function () {
+    setDisplayCreateModal(false);
+  };
+
   useEffect(() => {
     if (!message) return;
     const timer = setTimeout(() => {
@@ -96,7 +106,10 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
 
   return (
     <>
-      <h2>Hello daily-log</h2>
+      <div className="headline">
+        <h2>Hello daily-log</h2>
+        <button onClick={openCreateModal}></button>
+      </div>
       <form className="form" onSubmit={submitData}>
         <div className="form-item">
           <label className="form-item-label">Title: </label>
@@ -160,6 +173,24 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         {!!startTimeStamp && <div className="loader"></div>}
         {!!message && <p className="message">{message}</p>}
       </form>
+      {displayCreateModal && (
+        <CreateModal
+          onClose={closeCreateModal}
+          addLogData={addLogData}
+          cancel={cancel}
+          changeDescription={changeDescription}
+          changeTitle={changeTitle}
+          clearDescription={clearDescription}
+          clearTitle={clearTitle}
+          i={i}
+          initData={initData}
+          logsData={logsData}
+          message={message}
+          removeLogData={removeLogData}
+          startTimeStamp={startTimeStamp}
+          submitData={submitData}
+        />
+      )}
     </>
   );
 }

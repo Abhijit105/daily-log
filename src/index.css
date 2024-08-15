@@ -314,136 +314,139 @@ body {
   flex: 3;
   border-right: 0.5px solid var(--border);
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .gray-light {
   background-color: var(--gray-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .gray-dark {
   background-color: var(--gray-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .red-light {
   background-color: var(--red-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .red-dark {
   background-color: var(--red-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .pink-light {
   background-color: var(--pink-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .pink-dark {
   background-color: var(--pink-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .grape-light {
   background-color: var(--grape-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .grape-dark {
   background-color: var(--grape-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .violet-light {
   background-color: var(--violet-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .violet-dark {
   background-color: var(--violet-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .indigo-light {
   background-color: var(--indigo-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .indigo-dark {
   background-color: var(--indigo-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .blue-light {
   background-color: var(--blue-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .blue-dark {
   background-color: var(--blue-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .cyan-light {
   background-color: var(--cyan-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .cyan-dark {
   background-color: var(--cyan-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .teal-light {
   background-color: var(--teal-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .teal-dark {
   background-color: var(--teal-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .green-light {
   background-color: var(--green-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .green-dark {
   background-color: var(--green-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .lime-light {
   background-color: var(--lime-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .lime-dark {
   background-color: var(--lime-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .yellow-light {
   background-color: var(--yellow-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .yellow-dark {
   background-color: var(--yellow-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .orange-light {
   background-color: var(--orange-light) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .orange-dark {
   background-color: var(--orange-dark) !important;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .color-container {
@@ -460,12 +463,11 @@ body {
   padding: 0.5rem;
   position: absolute;
   bottom: -3rem;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   z-index: 1;
 }
 
 .display {
-  overflow-y: auto;
   flex: 2;
   display: flex;
   flex-direction: column;
@@ -478,10 +480,16 @@ body {
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: flex-start;
-  padding: 2rem;
-  border-radius: 0.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 
 .form-item {
@@ -530,7 +538,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .date-item {
@@ -543,9 +551,10 @@ body {
 .displayed-logs {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   padding: 2rem;
-  border-radius: 0.5rem;
+  border-radius: 5px;
+  overflow-y: auto;
 }
 
 .displayed-log {
@@ -555,8 +564,8 @@ body {
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
-  padding: 2rem;
-  border-radius: 0.5rem;
+  padding: 1rem;
+  border-radius: 5px;
 }
 
 .action-buttons {
@@ -575,12 +584,23 @@ body {
   color: var(--text);
   z-index: 2;
   padding: 2em;
-  border-radius: 0.5rem;
+  border-radius: 5px;
+}
+
+.create-modal {
+  width: 66%;
+  border-radius: 5px;
+}
+
+.read-modal {
+  width: auto;
+  height: 66vh;
+  overflow-y: scroll;
 }
 
 .update-modal {
   width: 66%;
-  border-radius: 0.5rem;
+  border-radius: 5px;
 }
 
 .overlay {
@@ -661,7 +681,7 @@ textarea {
   font-weight: 400;
   border-color: var(--border);
   border-width: 1px;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   letter-spacing: 1px;
 }
 
@@ -676,7 +696,7 @@ button {
   font-weight: 700;
   min-width: 2em;
   height: 2em;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   letter-spacing: 1px;
 }
 

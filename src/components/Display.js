@@ -1,9 +1,9 @@
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useState } from "react";
 import { db } from "../libs/firebase";
 import { signInWithGoogle, signOutWithGoogle } from "../libs/firebase";
-import UpdateModal from "./UpdateModal";
-import DeleteModal from "./DeleteModal";
+import DisplayLog from "./DisplayLog";
+import ReadModal from "./ReadModal";
 
 function Display() {
   const [date, setDate] = useState("");
@@ -11,27 +11,14 @@ function Display() {
   const [displayedLogs, setDisplayedLogs] = useState([]);
   const [errorDisplayedLogs, setErrorDisplayedLogs] = useState("");
   const [isLoadingDisplayedLogs, setIsLoadingDisplayedLogs] = useState(false);
-  const [displayUpdateModal, setDisplayUpdateModal] = useState(false);
-  const [logToBeUpdated, setLogToBeUpdated] = useState(null);
-  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
-  const [logToBeDeleted, setLogToBeDeleted] = useState(null);
+  const [displayReadModal, setDisplayReadModal] = useState(false);
 
-  const openUpdateModal = function (selectedLog) {
-    setDisplayUpdateModal(true);
-    setLogToBeUpdated(selectedLog);
+  const openReadModal = function () {
+    setDisplayReadModal(true);
   };
 
-  const closeUpdateModal = function () {
-    setDisplayUpdateModal(false);
-  };
-
-  const openDeleteModal = function (selectedLog) {
-    setDisplayDeleteModal(true);
-    setLogToBeDeleted(selectedLog);
-  };
-
-  const closeDeleteModal = function () {
-    setDisplayDeleteModal(false);
+  const closeReadModal = function () {
+    setDisplayReadModal(false);
   };
 
   const yesterday = async function () {
@@ -126,38 +113,13 @@ function Display() {
     }
   };
 
-  useEffect(() => {
-    if (!displayUpdateModal) return;
-    const unsubscribe = onSnapshot(
-      doc(db, "daily-log-24", logToBeUpdated.id),
-      (doc) =>
-        setDisplayedLogs((displayedLogs) =>
-          displayedLogs.map((log) =>
-            log.id !== logToBeUpdated.id ? log : { ...log, ...doc.data() }
-          )
-        )
-    );
-    return () => unsubscribe();
-  }, [displayUpdateModal, logToBeUpdated?.id]);
-
-  useEffect(() => {
-    if (!displayDeleteModal) return;
-    const unsubscribe = onSnapshot(
-      doc(db, "daily-log-24", logToBeDeleted.id),
-      (doc) =>
-        setDisplayedLogs((displayedLogs) =>
-          displayedLogs.filter((log) => log.id !== logToBeDeleted.id)
-        )
-    );
-    return () => unsubscribe();
-  }, [displayDeleteModal, logToBeDeleted?.id]);
-
   console.log(displayedLogs);
 
   return (
     <>
       <div className="display">
         <nav className="nav nav-auth">
+          <button onClick={openReadModal}></button>
           <button onClick={signInWithGoogle}>Google</button>
           <button onClick={signOutWithGoogle}>Sign Out</button>
         </nav>
@@ -201,27 +163,12 @@ function Display() {
                     b.startTimeStamp.toDate().getTime()
                 )
                 .map((log, i) => (
-                  <div className="displayed-log" key={i}>
-                    <div>
-                      <h3>{i + 1}. </h3>
-                    </div>
-                    <div>
-                      <h3>{log.title}</h3>
-                      <p>{log.description}</p>
-                      <h5>
-                        Start: {log.startTimeStamp.toDate().toLocaleString()}{" "}
-                        End: {log.endTimeStamp.toDate().toLocaleString()}
-                      </h5>
-                    </div>
-                    <div className="action-buttons">
-                      <button onClick={() => openUpdateModal(log)}>
-                        Update
-                      </button>
-                      <button onClick={() => openDeleteModal(log)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+                  <DisplayLog
+                    i={i}
+                    log={log}
+                    setDisplayedLogs={setDisplayedLogs}
+                    key={i}
+                  />
                 ))}
             </div>
           ) : (
@@ -231,11 +178,14 @@ function Display() {
           <p className="message">{errorDisplayedLogs}</p>
         )}
       </div>
-      {displayUpdateModal && (
-        <UpdateModal onClose={closeUpdateModal} log={logToBeUpdated} />
-      )}
-      {displayDeleteModal && (
-        <DeleteModal onClose={closeDeleteModal} log={logToBeDeleted} />
+      {displayReadModal && (
+        <ReadModal
+          displayedLogs={displayedLogs}
+          errorDisplayedLogs={errorDisplayedLogs}
+          isLoadingDisplayedLogs={isLoadingDisplayedLogs}
+          onClose={closeReadModal}
+          setDisplayedLogs={setDisplayedLogs}
+        />
       )}
     </>
   );
