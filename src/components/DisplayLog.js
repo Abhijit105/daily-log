@@ -68,10 +68,18 @@ function DisplayLog({ i, log, setDisplayedLogs }) {
         </div>
       </div>
       {displayUpdateModal && (
-        <UpdateModal onClose={closeUpdateModal} log={log} />
+        <UpdateModal
+          onClose={closeUpdateModal}
+          log={log}
+          displayUpdateModal={displayUpdateModal}
+        />
       )}
       {displayDeleteModal && (
-        <DeleteModal onClose={closeDeleteModal} log={log} />
+        <DeleteModal
+          onClose={closeDeleteModal}
+          log={log}
+          displayDeleteModal={displayDeleteModal}
+        />
       )}
     </>
   );

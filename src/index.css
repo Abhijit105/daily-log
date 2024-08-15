@@ -629,16 +629,7 @@ body {
 }
 
 .read-modal::-webkit-scrollbar {
-  width: 1rem;
-}
-
-.read-modal::-webkit-scrollbar-thumb {
-  background-color: var(--border);
-  border-radius: 5px;
-}
-
-.read-modal::-webkit-scrollbar-track {
-  background-color: var(--bgprimary);
+  display: none;
 }
 
 .update-modal {

@@ -1,3 +1,5 @@
+import React, { useCallback, useEffect } from "react";
+
 function CreateModal({
   onClose,
   submitData,
@@ -13,7 +15,21 @@ function CreateModal({
   addLogData,
   removeLogData,
   message,
+  displayCreateModal,
 }) {
+  const escapeCloser = useCallback(
+    function (event) {
+      if (event.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    if (!displayCreateModal) return;
+    document.addEventListener("keydown", escapeCloser);
+    return () => document.removeEventListener("keydown", escapeCloser);
+  }, [escapeCloser, displayCreateModal]);
+
   return (
     <>
       <div className="modal create-modal">

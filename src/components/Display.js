@@ -119,7 +119,10 @@ function Display() {
     <>
       <div className="display">
         <nav className="nav nav-auth">
-          <button onClick={openReadModal}></button>
+          <button
+            onClick={openReadModal}
+            disabled={displayedLogs?.length === 0}
+          ></button>
           <button onClick={signInWithGoogle}>Google</button>
           <button onClick={signOutWithGoogle}>Sign Out</button>
         </nav>
@@ -181,10 +184,9 @@ function Display() {
       {displayReadModal && (
         <ReadModal
           displayedLogs={displayedLogs}
-          errorDisplayedLogs={errorDisplayedLogs}
-          isLoadingDisplayedLogs={isLoadingDisplayedLogs}
           onClose={closeReadModal}
           setDisplayedLogs={setDisplayedLogs}
+          displayReadModal={displayReadModal}
         />
       )}
     </>

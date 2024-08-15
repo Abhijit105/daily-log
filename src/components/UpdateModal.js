@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { db } from "../libs/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
-function UpdateModal({ onClose, log }) {
+function UpdateModal({ onClose, log, displayUpdateModal }) {
   const [title, setTitle] = useState(log.title);
   const [description, setDescription] = useState(log.description);
   const [message, setMessage] = useState("");
@@ -22,6 +22,19 @@ function UpdateModal({ onClose, log }) {
       onClose();
     }
   };
+
+  const escapeCloser = useCallback(
+    function (event) {
+      if (event.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    if (!displayUpdateModal) return;
+    document.addEventListener("keydown", escapeCloser);
+    return () => document.removeEventListener("keydown", escapeCloser);
+  }, [escapeCloser, displayUpdateModal]);
 
   return (
     <>

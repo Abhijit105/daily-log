@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { db } from "../libs/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 
-function DeleteModal({ onClose, log }) {
+function DeleteModal({ onClose, log, displayDeleteModal }) {
   const [message, setMessage] = useState("");
 
   const deleteData = async function (event, selectedId) {
@@ -17,6 +17,19 @@ function DeleteModal({ onClose, log }) {
       onClose();
     }
   };
+
+  const escapeCloser = useCallback(
+    function (event) {
+      if (event.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    if (!displayDeleteModal) return;
+    document.addEventListener("keydown", escapeCloser);
+    return () => document.removeEventListener("keydown", escapeCloser);
+  }, [escapeCloser, displayDeleteModal]);
 
   return (
     <>

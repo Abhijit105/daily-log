@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import CreateModal from "./CreateModal";
 
@@ -92,17 +92,18 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     };
   }, [message]);
 
+  const screenWidthListener = useCallback(function () {
+    const loaderWidth = window.innerWidth * 0.6 - 40;
+    document.querySelector(".loader").style.width = loaderWidth;
+  }, []);
+
   useEffect(() => {
     if (!startTimeStamp) return;
-    const screenWidthListener = function () {
-      const loaderWidth = window.innerWidth * 0.6 - 40;
-      document.querySelector(".loader").style.width = loaderWidth;
-    };
     window.addEventListener("resize", screenWidthListener);
     return () => {
       window.removeEventListener("resize", screenWidthListener);
     };
-  }, [startTimeStamp]);
+  }, [startTimeStamp, screenWidthListener]);
 
   return (
     <>
@@ -183,6 +184,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
           changeTitle={changeTitle}
           clearDescription={clearDescription}
           clearTitle={clearTitle}
+          displayCreateModal={displayCreateModal}
           i={i}
           initData={initData}
           logsData={logsData}
