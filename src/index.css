@@ -635,6 +635,11 @@ body {
 .update-modal {
   width: 66%;
   border-radius: 5px;
+  z-index: 4;
+}
+
+.delete-modal {
+  z-index: 4;
 }
 
 .overlay {
@@ -645,6 +650,14 @@ body {
   backdrop-filter: blur(2px);
   top: 0;
   left: 0;
+}
+
+.update-modal-overlay {
+  z-index: 3;
+}
+
+.delete-modal-overlay {
+  z-index: 3;
 }
 
 /* HTML: <div class="loader"></div> */

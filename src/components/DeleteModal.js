@@ -47,7 +47,7 @@ function DeleteModal({ onClose, log, displayDeleteModal }) {
           {!!message && <p className="message">{message}</p>}
         </form>
       </div>
-      <div className="overlay" onClick={onClose}></div>
+      <div className="overlay delete-modal-overlay" onClick={onClose}></div>
     </>
   );
 }

@@ -69,7 +69,7 @@ function UpdateModal({ onClose, log, displayUpdateModal }) {
           {!!message && <p className="message">{message}</p>}
         </form>
       </div>
-      <div className="overlay" onClick={onClose}></div>
+      <div className="overlay update-modal-overlay" onClick={onClose}></div>
     </>
   );
 }
