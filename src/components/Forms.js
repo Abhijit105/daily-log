@@ -1,53 +1,53 @@
-import React, { useState } from "react";
-import Form from "./Form";
-import { db } from "../libs/firebase";
-import { COLORS } from "../config/config";
-import ColorContainer from "./ColorContainer";
+import React, { useState } from 'react'
+import Form from './Form'
+import { db } from '../libs/firebase'
+import { COLORS } from '../config/config'
+import ColorContainer from './ColorContainer'
 
 function Forms({ localTheme, onTheme, mode }) {
   const [logsData, setLogsData] = useState([
     {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
     },
-  ]);
+  ])
 
   const addLogData = function (event) {
-    event.preventDefault();
-    setLogsData((logsData) => [
+    event.preventDefault()
+    setLogsData(logsData => [
       ...logsData,
       {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
       },
-    ]);
-  };
+    ])
+  }
 
   const removeLogData = function (event) {
-    event.preventDefault();
-    setLogsData((logsData) =>
+    event.preventDefault()
+    setLogsData(logsData =>
       logsData.filter((_, i, arr) => i !== arr.length - 1)
-    );
-  };
+    )
+  }
 
   const changeColorHandler = function (event) {
-    onTheme(event.target.dataset.color, localTheme.split("-")[1]);
-  };
+    onTheme(event.target.dataset.color, localTheme.split('-')[1])
+  }
 
   const changeModeHandler = function (event) {
-    onTheme(localTheme.split("-")[0], event.target.dataset.mode);
-  };
+    onTheme(localTheme.split('-')[0], event.target.dataset.mode)
+  }
 
   return (
-    <div className="forms">
-      <nav className="nav nav-buttons">
-        <button data-mode="light" onClick={changeModeHandler}>
+    <div className='forms'>
+      <nav className='nav nav-buttons'>
+        <button data-mode='light' onClick={changeModeHandler}>
           Light
         </button>
-        <button data-mode="dark" onClick={changeModeHandler}>
+        <button data-mode='dark' onClick={changeModeHandler}>
           Dark
         </button>
-        <button data-mode="auto" onClick={changeModeHandler}>
+        <button data-mode='auto' onClick={changeModeHandler}>
           Auto
         </button>
         {COLORS.map((color, i) => (
@@ -72,7 +72,7 @@ function Forms({ localTheme, onTheme, mode }) {
         />
       ))}
     </div>
-  );
+  )
 }
 
-export default Forms;
+export default Forms
