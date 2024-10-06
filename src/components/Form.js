@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import CreateModal from './CreateModal'
 
@@ -6,6 +6,9 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
   const [startTimeStamp, setStartTimeStamp] = useState(null)
   const [message, setMessage] = useState('')
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
+
+  const titleRef = useRef()
+  const descriptionRef = useRef()
 
   const changeTitle = function (event) {
     setLogsData(logsData =>
@@ -38,6 +41,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
       endTimeStamp: new Date(),
     }
     try {
+      event.target.querySelectorAll('button')[3].classList.add('btn-loading')
       const logsCol = collection(db, 'daily-log-24')
       const newLogRef = await addDoc(logsCol, newLog)
       console.log(`Document written with id ${newLogRef.id}`)
@@ -47,6 +51,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
       setMessage(err.message)
     } finally {
       setStartTimeStamp(null)
+      event.target.querySelectorAll('button')[3].classList.remove('btn-loading')
     }
   }
 
@@ -60,7 +65,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { logData, title: '' }
       )
     )
-    document.getElementById(`title-${i}`).focus()
+    titleRef.current.focus()
   }
 
   const clearDescription = function (event) {
@@ -70,7 +75,7 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
         idx !== i ? logData : { ...logData, description: '' }
       )
     )
-    document.getElementById(`description-${i}`).focus()
+    descriptionRef.current.focus()
   }
 
   const openCreateModal = function () {
@@ -106,7 +111,6 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
   }, [startTimeStamp, screenWidthListener])
 
   const exitListener = useCallback(function (event) {
-    console.log('called')
     event.preventDefault()
     event.returnValue = 'A log is in progress. Are you sure you want to exit?'
   }, [])
@@ -130,10 +134,10 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
           <div className='form-item'>
             <label className='form-item-label'>Title: </label>
             <input
-              id={`title-${i}`}
               className='form-item-input'
               value={logsData[i].title}
               onChange={event => changeTitle(event)}
+              ref={titleRef}
             />
             <button className='form-item-button' onClick={clearTitle}>
               Clear
@@ -142,10 +146,10 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
           <div className='form-item'>
             <label className='form-item-label'>Description: </label>
             <textarea
-              id={`description-${i}`}
               className='form-item-textarea'
               value={logsData[i].description}
               onChange={event => changeDescription(event)}
+              ref={descriptionRef}
             />
             <button
               className='form-item-button'
@@ -208,6 +212,8 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
           removeLogData={removeLogData}
           startTimeStamp={startTimeStamp}
           submitData={submitData}
+          titleRef={titleRef}
+          descriptionRef={descriptionRef}
         />
       )}
     </>

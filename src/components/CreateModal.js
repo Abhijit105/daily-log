@@ -16,6 +16,8 @@ function CreateModal({
   removeLogData,
   message,
   displayCreateModal,
+  titleRef,
+  descriptionRef,
 }) {
   const escapeCloser = useCallback(
     function (event) {
@@ -41,10 +43,10 @@ function CreateModal({
           <div className='form-item'>
             <label className='form-item-label'>Title: </label>
             <input
-              id={`title-${i}`}
               className='form-item-input'
               value={logsData[i].title}
               onChange={event => changeTitle(event)}
+              ref={titleRef}
             />
             <button className='form-item-button' onClick={clearTitle}>
               Clear
@@ -53,10 +55,10 @@ function CreateModal({
           <div className='form-item'>
             <label className='form-item-label'>Description: </label>
             <textarea
-              id={`description-${i}`}
               className='form-item-textarea'
               value={logsData[i].description}
               onChange={event => changeDescription(event)}
+              ref={descriptionRef}
             />
             <button
               className='form-item-button'

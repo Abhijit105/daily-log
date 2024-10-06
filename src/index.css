@@ -37,6 +37,10 @@
   --border: #e7eaed;
   --accent: #ced4da;
   --highlight: #d8dde1;
+  --variant-50: #e7eaed;
+  --variant-30: #dde1e5;
+  --variant-10: #d3d8de;
+  --variant-70: #3e4041;
 }
 
 [data-theme='gray-dark'] {
@@ -675,6 +679,14 @@ body {
   }
 }
 
+.spinner-container {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lds-circle,
 .lds-circle div {
   box-sizing: border-box;
@@ -682,10 +694,11 @@ body {
 
 .lds-circle {
   display: inline-block;
-  transform: translateZ(1px) translateX(-50%) translateY(-50%);
+  /* transform: translateZ(1px) translateX(-50%) translateY(-50%);
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 50%; */
+  transform: translateZ(1px);
 }
 
 .lds-circle > div {
@@ -765,6 +778,19 @@ button:disabled {
 button:disabled:hover {
   filter: none;
   box-shadow: none;
+}
+
+@keyframes btn-animation {
+  from {
+    background-color: var(--bgsecondary);
+  }
+  to {
+    background-color: var(--variant-70);
+  }
+}
+
+.btn-loading {
+  animation: btn-animation 70ms infinite alternate-reverse;
 }
 
 form:hover,
