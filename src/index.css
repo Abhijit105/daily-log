@@ -37,10 +37,7 @@
   --border: #e7eaed;
   --accent: #ced4da;
   --highlight: #d8dde1;
-  --variant-50: #e7eaed;
-  --variant-30: #dde1e5;
-  --variant-10: #d3d8de;
-  --variant-70: #3e4041;
+  --variant: #3e4041;
 }
 
 [data-theme='gray-dark'] {
@@ -51,6 +48,7 @@
   --border: #575b5f;
   --accent: #adb5bd;
   --highlight: #8a9197;
+  --variant: #e6e9eb;
 }
 
 [data-theme='red-light'] {
@@ -61,6 +59,7 @@
   --border: #ffc3c3;
   --accent: #ff8787;
   --highlight: #ff9f9f;
+  --variant: #4d2929;
 }
 
 [data-theme='red-dark'] {
@@ -71,6 +70,7 @@
   --border: #803636;
   --accent: #ff6b6b;
   --highlight: #cc5656;
+  --variant: #ffd3d3;
 }
 
 [data-theme='pink-light'] {
@@ -81,6 +81,7 @@
   --border: #fbc1d6;
   --accent: #f783ac;
   --highlight: #f99cbd;
+  --variant: #4a2734;
 }
 
 [data-theme='pink-dark'] {
@@ -91,6 +92,7 @@
   --border: #78334b;
   --accent: #f06595;
   --highlight: #c05177;
+  --variant: #fbd1df;
 }
 
 [data-theme='grape-light'] {
@@ -101,6 +103,7 @@
   --border: #edbbf9;
   --accent: #e192f5;
   --highlight: #e599f7;
+  --variant: #442c4a;
 }
 
 [data-theme='grape-dark'] {
@@ -111,6 +114,7 @@
   --border: #662f74;
   --accent: #cc5de8;
   --highlight: #a34aba;
+  --variant: #f0cef8;
 }
 
 [data-theme='violet-light'] {
@@ -121,6 +125,7 @@
   --border: #cbbafd;
   --accent: #9775fa;
   --highlight: #ac91fb;
+  --variant: #2d234b;
 }
 
 [data-theme='violet-dark'] {
@@ -131,6 +136,7 @@
   --border: #422f7c;
   --accent: #845ef7;
   --highlight: #6a4bc6;
+  --variant: #dacffd;
 }
 
 [data-theme='indigo-light'] {
@@ -141,6 +147,7 @@
   --border: #bac7fe;
   --accent: #748ffc;
   --highlight: #90a5fd;
+  --variant: #232b4c;
 }
 
 [data-theme='indigo-dark'] {
@@ -151,6 +158,7 @@
   --border: #2e3e7d;
   --accent: #5c7cfa;
   --highlight: #4a63c8;
+  --variant: #ced8fe;
 }
 
 [data-theme='blue-light'] {
@@ -161,6 +169,7 @@
   --border: #a6d5fb;
   --accent: #4dabf7;
   --highlight: #71bcf9;
+  --variant: #17334a;
 }
 
 [data-theme='blue-dark'] {
@@ -171,6 +180,7 @@
   --border: #1a4d78;
   --accent: #339af0;
   --highlight: #297bc0;
+  --variant: #c2e1fb;
 }
 
 [data-theme='cyan-light'] {
@@ -181,6 +191,7 @@
   --border: #9de4ed;
   --accent: #3bc9db;
   --highlight: #62d4e2;
+  --variant: #123c42;
 }
 
 [data-theme='cyan-dark'] {
@@ -191,6 +202,7 @@
   --border: #115c68;
   --accent: #22b8cf;
   --highlight: #1b93a6;
+  --variant: #bdeaf1;
 }
 
 [data-theme='teal-light'] {
@@ -201,6 +213,7 @@
   --border: #9cecd4;
   --accent: #38d9a9;
   --highlight: #60e1ba;
+  --variant: #114133;
 }
 
 [data-theme='teal-dark'] {
@@ -211,6 +224,7 @@
   --border: #10654c;
   --accent: #20c997;
   --highlight: #1aa179;
+  --variant: #bcefe0;
 }
 
 [data-theme='green-light'] {
@@ -221,6 +235,7 @@
   --border: #b4edbe;
   --accent: #69db7c;
   --highlight: #87e296;
+  --variant: #204225;
 }
 
 [data-theme='green-dark'] {
@@ -231,6 +246,7 @@
   --border: #296833;
   --accent: #51cf66;
   --highlight: #41a652;
+  --variant: #cbf1d1;
 }
 
 [data-theme='lime-light'] {
@@ -241,6 +257,7 @@
   --border: #d4f1a5;
   --accent: #a9e34b;
   --highlight: #bae96f;
+  --variant: #334417;
 }
 
 [data-theme='lime-dark'] {
@@ -251,6 +268,7 @@
   --border: #4a6c172;
   --accent: #94d82d;
   --highlight: #76ad24;
+  --variant: #dff3c0;
 }
 
 [data-theme='yellow-light'] {
@@ -261,6 +279,7 @@
   --border: #ffea9d;
   --accent: #ffd43b;
   --highlight: #ffdd62;
+  --variant: #4d4012;
 }
 
 [data-theme='yellow-dark'] {
@@ -271,6 +290,7 @@
   --border: #7e620d;
   --accent: #fcc419;
   --highlight: #ca9d14;
+  --variant: #feedba;
 }
 [data-theme='orange-light'] {
   --bgprimary: #fff6ed;
@@ -280,6 +300,7 @@
   --border: #ffd4a6;
   --accent: #ffa94d;
   --highlight: #ffba71;
+  --variant: #4d3317;
 }
 
 [data-theme='orange-dark'] {
@@ -290,6 +311,7 @@
   --border: #804916;
   --accent: #ff922b;
   --highlight: #cc7522;
+  --variant: #ffdebf;
 }
 
 html {
@@ -785,7 +807,7 @@ button:disabled:hover {
     background-color: var(--bgsecondary);
   }
   to {
-    background-color: var(--variant-70);
+    background-color: var(--variant);
   }
 }
 
