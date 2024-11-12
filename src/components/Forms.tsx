@@ -1,18 +1,29 @@
-import React, { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import Form from './Form'
 import { db } from '../libs/firebase'
 import { COLORS } from '../config/config'
 import ColorContainer from './ColorContainer'
 
-function Forms({ localTheme, onTheme, mode }) {
-  const [logsData, setLogsData] = useState([
+interface FormsProps {
+  localTheme: string
+  onTheme: (selectedColor: string, selectedMode: string) => void
+  mode: string
+}
+
+interface LogsData {
+  title: string
+  description: string
+}
+
+function Forms({ localTheme, onTheme, mode }: FormsProps) {
+  const [logsData, setLogsData] = useState<LogsData[]>([
     {
       title: '',
       description: '',
     },
   ])
 
-  const addLogData = function (event) {
+  const addLogData: MouseEventHandler<HTMLButtonElement> = function (event) {
     event.preventDefault()
     setLogsData(logsData => [
       ...logsData,
@@ -23,19 +34,29 @@ function Forms({ localTheme, onTheme, mode }) {
     ])
   }
 
-  const removeLogData = function (event) {
+  const removeLogData: MouseEventHandler<HTMLButtonElement> = function (event) {
     event.preventDefault()
     setLogsData(logsData =>
       logsData.filter((_, i, arr) => i !== arr.length - 1)
     )
   }
 
-  const changeColorHandler = function (event) {
-    onTheme(event.target.dataset.color, localTheme.split('-')[1])
+  const changeColorHandler: MouseEventHandler<HTMLButtonElement> = function (
+    event
+  ) {
+    onTheme(
+      (event.target as HTMLButtonElement).dataset.color ?? '',
+      localTheme.split('-')[1]
+    )
   }
 
-  const changeModeHandler = function (event) {
-    onTheme(localTheme.split('-')[0], event.target.dataset.mode)
+  const changeModeHandler: MouseEventHandler<HTMLButtonElement> = function (
+    event
+  ) {
+    onTheme(
+      localTheme.split('-')[0],
+      (event.target as HTMLButtonElement).dataset.mode ?? ''
+    )
   }
 
   return (

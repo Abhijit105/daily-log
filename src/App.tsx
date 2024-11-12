@@ -3,11 +3,14 @@ import Display from './components/Display'
 import Forms from './components/Forms'
 
 function App() {
-  const [localTheme, setLocalTheme] = useState('')
-  const [displayGlobalTheme, setDisplayGlobalTheme] = useState(false)
-  const [globalTheme, setGlobalTheme] = useState('')
+  const [localTheme, setLocalTheme] = useState<string>('')
+  const [displayGlobalTheme, setDisplayGlobalTheme] = useState<boolean>(false)
+  const [globalTheme, setGlobalTheme] = useState<string>('')
 
-  const handleChangeTheme = function (selectedColor, selectedMode) {
+  const handleChangeTheme = function (
+    selectedColor: string,
+    selectedMode: string
+  ): void {
     const selectedTheme = [selectedColor, selectedMode].join('-')
     localStorage.setItem('theme', JSON.stringify(selectedTheme))
     setLocalTheme(selectedTheme)
@@ -15,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const selectedTheme =
-      JSON.parse(localStorage.getItem('theme')) ?? 'gray-light'
+      JSON.parse(localStorage.getItem('theme') ?? '') ?? 'gray-light'
     setLocalTheme(selectedTheme)
   }, [])
 
@@ -28,11 +31,11 @@ function App() {
     )
   }, [localTheme])
 
-  const autoThemeSwitcher = useCallback(function (event) {
+  const autoThemeSwitcher = useCallback(function (event: MediaQueryListEvent) {
     setGlobalTheme(
       globalTheme =>
         `${globalTheme.split('-')[0]}-${
-          event.target.matches ? 'dark' : 'light'
+          (event.target as MediaQueryList).matches ? 'dark' : 'light'
         }`
     )
   }, [])
