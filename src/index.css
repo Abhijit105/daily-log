@@ -784,7 +784,7 @@ button {
 
 button:hover {
   background-color: var(--accent);
-  filter: brightness(1.1);
+  /* filter: brightness(1.1); */
 }
 
 button:active {
