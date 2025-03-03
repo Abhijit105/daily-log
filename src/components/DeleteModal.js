@@ -1,55 +1,53 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { db } from "../libs/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import React, { useState, useCallback, useEffect } from 'react'
+import firebase from '../libs/firebase'
 
 function DeleteModal({ onClose, log, displayDeleteModal }) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('')
 
   const deleteData = async function (event, selectedId) {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const docRef = doc(db, "daily-log-24", selectedId);
-      await deleteDoc(docRef);
+      await firebase.deleteDocument(selectedId)
     } catch (err) {
-      console.log(err.message);
-      setMessage(err.message);
+      console.log(err.message)
+      setMessage(err.message)
     } finally {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   const escapeCloser = useCallback(
     function (event) {
-      if (event.key === "Escape") onClose();
+      if (event.key === 'Escape') onClose()
     },
     [onClose]
-  );
+  )
 
   useEffect(() => {
-    if (!displayDeleteModal) return;
-    document.addEventListener("keydown", escapeCloser);
-    return () => document.removeEventListener("keydown", escapeCloser);
-  }, [escapeCloser, displayDeleteModal]);
+    if (!displayDeleteModal) return
+    document.addEventListener('keydown', escapeCloser)
+    return () => document.removeEventListener('keydown', escapeCloser)
+  }, [escapeCloser, displayDeleteModal])
 
   return (
     <>
-      <div className="modal delete-modal">
-        <form className="form" onSubmit={(event) => deleteData(event, log.id)}>
+      <div className='modal delete-modal'>
+        <form className='form' onSubmit={event => deleteData(event, log.id)}>
           <p>Are you sure you want to delete?</p>
-          <div className="form-item">
-            <button className="form-button" type="submit">
+          <div className='form-item'>
+            <button className='form-button' type='submit'>
               Delete
             </button>
-            <button className="form-button" onClick={onClose}>
+            <button className='form-button' onClick={onClose}>
               Cancel
             </button>
           </div>
-          {!!message && <p className="message">{message}</p>}
+          {!!message && <p className='message'>{message}</p>}
         </form>
       </div>
-      <div className="overlay delete-modal-overlay" onClick={onClose}></div>
+      <div className='overlay delete-modal-overlay' onClick={onClose}></div>
     </>
-  );
+  )
 }
 
-export default DeleteModal;
+export default DeleteModal

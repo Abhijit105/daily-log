@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import Display from './components/Display'
 import Forms from './components/Forms'
+import firebase from './libs/firebase'
 
 function App() {
   const [localTheme, setLocalTheme] = useState('')
@@ -47,6 +48,10 @@ function App() {
         .removeEventListener('change', autoThemeSwitcher)
     }
   }, [autoThemeSwitcher])
+
+  useEffect(() => {
+    firebase.getCurrentUser()
+  }, [])
 
   return (
     <>

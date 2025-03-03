@@ -1,77 +1,76 @@
-import { useState, useCallback, useEffect } from "react";
-import { db } from "../libs/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { useState, useCallback, useEffect } from 'react'
+import firebase from '../libs/firebase'
 
 function UpdateModal({ onClose, log, displayUpdateModal }) {
-  const [title, setTitle] = useState(log.title);
-  const [description, setDescription] = useState(log.description);
-  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState(log.title)
+  const [description, setDescription] = useState(log.description)
+  const [message, setMessage] = useState('')
 
   const updateData = async function (event, selectedId) {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const docRef = doc(db, "daily-log-24", selectedId);
-      await updateDoc(docRef, {
+      const updatedDocFields = {
         title,
         description,
-      });
+      }
+      await firebase.updateDocument(selectedId, updatedDocFields)
     } catch (err) {
-      console.log(err.message);
-      setMessage(err.message);
+      console.log(err.message)
+      setMessage(err.message)
     } finally {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   const escapeCloser = useCallback(
     function (event) {
-      if (event.key === "Escape") onClose();
+      if (event.key === 'Escape') onClose()
     },
     [onClose]
-  );
+  )
 
   useEffect(() => {
-    if (!displayUpdateModal) return;
-    document.addEventListener("keydown", escapeCloser);
-    return () => document.removeEventListener("keydown", escapeCloser);
-  }, [escapeCloser, displayUpdateModal]);
+    if (!displayUpdateModal) return
+    document.addEventListener('keydown', escapeCloser)
+    return () => document.removeEventListener('keydown', escapeCloser)
+  }, [escapeCloser, displayUpdateModal])
 
   return (
     <>
-      <div className="modal update-modal">
-        <form className="form" onSubmit={(event) => updateData(event, log.id)}>
-          <div className="form-item">
-            <label className="form-item-label">Title: </label>
+      <div className='modal update-modal'>
+        <form className='form' onSubmit={event => updateData(event, log.id)}>
+          <div className='form-item'>
+            <label className='form-item-label'>Title: </label>
             <input
-              id="title"
-              className="form-item-input"
+              id='title'
+              className='form-item-input'
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={event => setTitle(event.target.value)}
             />
           </div>
-          <div className="form-item">
-            <label className="form-item-label">Description: </label>
+          <div className='form-item'>
+            <label className='form-item-label'>Description: </label>
             <textarea
-              id="description"
-              className="form-item-textarea"
+              id='description'
+              className='form-item-textarea'
               value={description}
-              onChange={(event) => setDescription(event.target.value)}
+              onChange={event => setDescription(event.target.value)}
             />
           </div>
-          <div className="form-item">
-            <button className="form-button" type="submit">
+          <div className='form-item'>
+            <button className='form-button' type='submit'>
               Update
             </button>
-            <button className="form-button" onClick={onClose}>
+            <button className='form-button' onClick={onClose}>
               Cancel
             </button>
           </div>
-          {!!message && <p className="message">{message}</p>}
+          {!!message && <p className='message'>{message}</p>}
         </form>
       </div>
-      <div className="overlay update-modal-overlay" onClick={onClose}></div>
+      <div className='overlay update-modal-overlay' onClick={onClose}></div>
     </>
-  );
+  )
 }
 
-export default UpdateModal;
+export default UpdateModal

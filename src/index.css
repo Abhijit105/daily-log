@@ -538,6 +538,10 @@ body {
   justify-content: flex-start;
 }
 
+.modal .form-item {
+  justify-content: center;
+}
+
 .form-item-label {
   width: 8rem;
   display: inline-block;

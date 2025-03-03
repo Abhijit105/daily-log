@@ -1,17 +1,23 @@
-import { collection, getDocs } from 'firebase/firestore'
 import React, { useState } from 'react'
-import { db } from '../libs/firebase'
-import { signInWithGoogle, signOutWithGoogle } from '../libs/firebase'
 import DisplayLog from './DisplayLog'
 import ReadModal from './ReadModal'
+import firebase from '../libs/firebase'
 
 function Display() {
   const [date, setDate] = useState('')
   const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+  const [count, setCount] = useState(1)
   const [displayedLogs, setDisplayedLogs] = useState([])
   const [errorDisplayedLogs, setErrorDisplayedLogs] = useState('')
   const [isLoadingDisplayedLogs, setIsLoadingDisplayedLogs] = useState(false)
   const [displayReadModal, setDisplayReadModal] = useState(false)
+
+  let queriedDate = new Date(
+    year || new Date().getFullYear(),
+    month ? month - 1 : new Date().getMonth(),
+    date || new Date().getDate()
+  )
 
   const openReadModal = function () {
     setDisplayReadModal(true)
@@ -21,100 +27,66 @@ function Display() {
     setDisplayReadModal(false)
   }
 
-  const yesterday = async function (e) {
-    const now = new Date()
-    let yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    if (now.getDay() === 1)
-      yesterday.setTime(yesterday.getTime() - 3 * 24 * 60 * 60 * 1000)
-    else yesterday.setTime(yesterday.getTime() - 24 * 60 * 60 * 1000)
-    let plusOne = new Date()
-    plusOne.setTime(yesterday.getTime() + 24 * 60 * 60 * 1000)
-    try {
-      e.target.classList.add('btn-loading')
-      setIsLoadingDisplayedLogs(true)
-      setErrorDisplayedLogs('')
-      const logsCol = collection(db, 'daily-log-24')
-      const logsSnapshot = await getDocs(logsCol)
-      const logsList = logsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-      const logsYesterday = logsList.filter(
-        log =>
-          log.startTimeStamp?.toDate().getTime() >= yesterday.getTime() &&
-          log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
-      )
-      setDisplayedLogs(logsYesterday.reverse())
-    } catch (err) {
-      console.log('Error reading document' + err)
-      setErrorDisplayedLogs(err.message)
-    } finally {
-      setIsLoadingDisplayedLogs(false)
-      e.target.classList.remove('btn-loading')
+  const incrementCount = function () {
+    setCount(count => count + 1)
+  }
+
+  const decrementCount = function () {
+    if (count === 1) {
+      return
+    }
+    setCount(count => count - 1)
+  }
+
+  const handleWheel = function (event) {
+    if (event.deltaY < 0) {
+      incrementCount()
+    } else if (event.deltaY > 0) {
+      decrementCount()
     }
   }
 
-  const go = async function (e) {
-    if (!date && !month) {
-      const now = new Date()
-      const currentDate = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate()
+  const readLogs = async function (event, history = false) {
+    if (history) {
+      queriedDate = new Date(
+        queriedDate.getTime() - count * 24 * 60 * 60 * 1000
       )
-      try {
-        e.target.classList.add('btn-loading')
-        setIsLoadingDisplayedLogs(true)
-        setErrorDisplayedLogs('')
-        const logsCol = collection(db, 'daily-log-24')
-        const logsSnapshot = await getDocs(logsCol)
-        const logsList = logsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        const logsToday = logsList.filter(
-          log => log.startTimeStamp?.toDate().getTime() >= currentDate.getTime()
-        )
-        setDisplayedLogs(logsToday.reverse())
-      } catch (err) {
-        console.log('Error reading document:' + err)
-        setErrorDisplayedLogs(err.message)
-      } finally {
-        setIsLoadingDisplayedLogs(false)
-        e.target.classList.remove('btn-loading')
+      if (queriedDate.getDay() === 0) {
+        queriedDate.setTime(queriedDate.getTime() - 2 * 24 * 60 * 60 * 1000)
+      } else if (queriedDate.getDay() === 6) {
+        queriedDate.setTime(queriedDate.getTime() - 1 * 24 * 60 * 60 * 1000)
       }
     } else {
-      const now = new Date()
-      const enteredDate = new Date(
-        now.getFullYear(),
-        !!month ? month - 1 : now.getMonth(),
-        date ?? ''
+      queriedDate = new Date(
+        year || new Date().getFullYear(),
+        month ? month - 1 : new Date().getMonth(),
+        date || new Date().getDate()
       )
-      let plusOne = new Date()
-      plusOne.setTime(enteredDate.getTime() + 24 * 60 * 60 * 1000)
-      try {
-        e.target.classList.add('btn-loading')
-        setIsLoadingDisplayedLogs(true)
-        setErrorDisplayedLogs('')
-        const logsCol = collection(db, 'daily-log-24')
-        const logsSnapshot = await getDocs(logsCol)
-        const logsList = logsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        const logsEnteredDate = logsList.filter(
-          log =>
-            log.startTimeStamp?.toDate().getTime() >= enteredDate.getTime() &&
-            log.startTimeStamp?.toDate().getTime() < plusOne.getTime()
-        )
-        setDisplayedLogs(logsEnteredDate.reverse())
-      } catch (err) {
-        console.log('Error reading document:' + err)
-        setErrorDisplayedLogs(err.message)
-      } finally {
-        setIsLoadingDisplayedLogs(false)
-        e.target.classList.remove('btn-loading')
-      }
+    }
+    const plusOne = new Date(queriedDate.getTime() + 24 * 60 * 60 * 1000)
+    try {
+      event.target.classList.add('btn-loading')
+      setIsLoadingDisplayedLogs(true)
+      setErrorDisplayedLogs('')
+      const logsList = await firebase.getDocuments('and', [
+        {
+          field: 'startTimeStamp',
+          condition: '>=',
+          value: queriedDate,
+        },
+        {
+          field: 'startTimeStamp',
+          condition: '<',
+          value: plusOne,
+        },
+      ])
+      setDisplayedLogs(logsList.toReversed())
+    } catch (err) {
+      console.log('Error reading document:' + err)
+      setErrorDisplayedLogs(err.message)
+    } finally {
+      setIsLoadingDisplayedLogs(false)
+      event.target.classList.remove('btn-loading')
     }
   }
 
@@ -128,13 +100,22 @@ function Display() {
             onClick={openReadModal}
             disabled={displayedLogs?.length === 0}
           ></button>
-          <button onClick={signInWithGoogle}>Google</button>
-          <button onClick={signOutWithGoogle}>Sign Out</button>
+          <button onClick={firebase.signInWithGoogle}>Google</button>
+          <button onClick={firebase.signOutWithGoogle}>Sign Out</button>
         </nav>
         <div className='date-area'>
-          <div className='date-item'>
-            <button onClick={yesterday}>Yesterday...</button>
-          </div>
+          <button
+            onClick={event => readLogs(event, true)}
+            onWheel={handleWheel}
+            data-btn='history'
+          >
+            {count !== 1 ? `${count} days before` : 'Yesterday...'}
+          </button>
+          <button onClick={incrementCount}>&uarr;</button>
+          <button onClick={decrementCount} disabled={count === 1}>
+            &darr;
+          </button>
+
           <div className='date-item'>
             <input
               type='number'
@@ -156,13 +137,23 @@ function Display() {
             <label>MM</label>
           </div>
           <div className='date-item'>
-            <button onClick={go}>GO</button>
+            <input
+              type='number'
+              min={2000}
+              max={3000}
+              value={year}
+              onChange={event => setYear(event.target.value)}
+            />
+            <label>YY</label>
+          </div>
+          <div className='date-item'>
+            <button onClick={event => readLogs(event)}>GO</button>
           </div>
         </div>
         {!errorDisplayedLogs ? (
           isLoadingDisplayedLogs ? (
             <div className='spinner-container'>
-              <div class='lds-circle'>
+              <div className='lds-circle'>
                 <div></div>
               </div>
             </div>

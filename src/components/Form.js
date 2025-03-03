@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { addDoc, collection } from 'firebase/firestore'
 import CreateModal from './CreateModal'
+import firebase from '../libs/firebase'
 
-function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
+function Form({ i, logsData, setLogsData, addLogData, removeLogData }) {
   const [startTimeStamp, setStartTimeStamp] = useState(null)
   const [message, setMessage] = useState('')
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
@@ -42,10 +42,9 @@ function Form({ i, db, logsData, setLogsData, addLogData, removeLogData }) {
     }
     try {
       event.target.querySelectorAll('button')[3].classList.add('btn-loading')
-      const logsCol = collection(db, 'daily-log-24')
-      const newLogRef = await addDoc(logsCol, newLog)
-      console.log(`Document written with id ${newLogRef.id}`)
-      setMessage(`Document written with id ${newLogRef.id}`)
+      const newLogId = await firebase.createDoc(newLog)
+      console.log(`Document written with id ${newLogId}`)
+      setMessage(`Document written with id ${newLogId}`)
     } catch (err) {
       console.log('Error adding document: ' + err)
       setMessage(err.message)

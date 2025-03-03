@@ -1,27 +1,35 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 function ColorContainer({ mode, color, onColorHandler }) {
-  const [displayTooltip, setDisplayTooltip] = useState(false);
+  const [displayTooltip, setDisplayTooltip] = useState(false)
+
+  const showToolTip = function () {
+    setDisplayTooltip(true)
+  }
+
+  const hideTooltip = function () {
+    setDisplayTooltip(false)
+  }
 
   return (
-    <div className="color-container">
+    <div className='color-container'>
       <button
         className={`${color}-${mode}`}
         data-color={color}
         onClick={onColorHandler}
-        onMouseOver={() => setDisplayTooltip(true)}
-        onMouseOut={() => setDisplayTooltip(false)}
+        onMouseOver={showToolTip}
+        onMouseOut={hideTooltip}
       ></button>
       {displayTooltip && (
-        <div className="tooltip">
+        <div className='tooltip'>
           {color
-            .split("")
+            .split('')
             .map((char, i) => (i === 0 ? char.toLocaleUpperCase() : char))
-            .join("")}
+            .join('')}
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default ColorContainer;
+export default ColorContainer
