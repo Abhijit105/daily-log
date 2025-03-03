@@ -4,20 +4,14 @@ import ReadModal from './ReadModal'
 import firebase from '../libs/firebase'
 
 function Display() {
-  const [date, setDate] = useState('')
-  const [month, setMonth] = useState('')
-  const [year, setYear] = useState('')
+  const [date, setDate] = useState(null)
+  const [month, setMonth] = useState(null)
+  const [year, setYear] = useState(null)
   const [count, setCount] = useState(1)
   const [displayedLogs, setDisplayedLogs] = useState([])
   const [errorDisplayedLogs, setErrorDisplayedLogs] = useState('')
   const [isLoadingDisplayedLogs, setIsLoadingDisplayedLogs] = useState(false)
   const [displayReadModal, setDisplayReadModal] = useState(false)
-
-  let queriedDate = new Date(
-    year || new Date().getFullYear(),
-    month ? month - 1 : new Date().getMonth(),
-    date || new Date().getDate()
-  )
 
   const openReadModal = function () {
     setDisplayReadModal(true)
@@ -47,6 +41,11 @@ function Display() {
   }
 
   const readLogs = async function (event, history = false) {
+    let queriedDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()
+    )
     if (history) {
       queriedDate = new Date(
         queriedDate.getTime() - count * 24 * 60 * 60 * 1000
