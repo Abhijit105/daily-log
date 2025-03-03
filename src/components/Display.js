@@ -4,9 +4,9 @@ import ReadModal from './ReadModal'
 import firebase from '../libs/firebase'
 
 function Display() {
-  const [date, setDate] = useState(null)
-  const [month, setMonth] = useState(null)
-  const [year, setYear] = useState(null)
+  const [date, setDate] = useState('')
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
   const [count, setCount] = useState(1)
   const [displayedLogs, setDisplayedLogs] = useState([])
   const [errorDisplayedLogs, setErrorDisplayedLogs] = useState('')

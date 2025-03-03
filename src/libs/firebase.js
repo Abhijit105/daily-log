@@ -58,8 +58,9 @@ class Firebase {
       const auth = getAuth()
       const result = await signInWithPopup(auth, provider)
       console.log(result.user.email)
-    } catch (err) {
-      console.log(err.message)
+    } catch (error) {
+      console.log(error.message)
+      throw error
     }
   }
 
@@ -68,8 +69,9 @@ class Firebase {
       const auth = getAuth()
       const signOutRef = await signOut(auth)
       console.log(signOutRef)
-    } catch (err) {
-      console.log(err.message)
+    } catch (error) {
+      console.log(error.message)
+      throw error
     }
   }
 
@@ -82,7 +84,7 @@ class Firebase {
       return newDocRef.id
     } catch (error) {
       console.log('Service error while creating document', error)
-      return null
+      throw error
     }
   }
 
@@ -108,8 +110,8 @@ class Firebase {
       }))
       return documentsList
     } catch (error) {
-      console.log('Service error while reading documents', error)
-      return null
+      console.log('Service error while reading documents =>', error)
+      throw error
     }
   }
 
@@ -126,7 +128,8 @@ class Firebase {
       }
       return documentDetails
     } catch (error) {
-      console.log('Service error while reading document')
+      console.log('Service error while reading document =>', error)
+      throw error
     }
   }
 
@@ -135,7 +138,8 @@ class Firebase {
       const documentReference = doc(this.db, COLLECTIONNAME, selectedDocumentId)
       await updateDoc(documentReference, updatedDocumentFields)
     } catch (error) {
-      console.log('Service error while updating the document')
+      console.log('Service error while updating the document =>', error)
+      throw error
     }
   }
 
@@ -146,7 +150,8 @@ class Firebase {
       console.log(deleteDocumentReference)
       return deleteDocumentReference
     } catch (error) {
-      console.log('Service error while deleting the document')
+      console.log('Service error while deleting the document =>', error)
+      throw error
     }
   }
 }
