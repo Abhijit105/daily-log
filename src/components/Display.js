@@ -32,12 +32,66 @@ function Display() {
     setCount(count => count - 1)
   }
 
-  const handleWheel = function (event) {
+  const handleWheelYesterdayButton = function (event) {
     if (event.deltaY < 0) {
       incrementCount()
     } else if (event.deltaY > 0) {
       decrementCount()
     }
+  }
+
+  const handleSecondaryClickYesterdayButton = function (event) {
+    event.preventDefault()
+    setCount(1)
+  }
+
+  const handleWheelDateInput = function (event) {
+    if (event.deltaY < 0) {
+      setDate(date => Number(date) - 1)
+      if (event.target.value === '' || event.target.value === '1') {
+        setDate(31)
+      }
+    } else if (event.deltaY > 0) {
+      setDate(date => Number(date) + 1)
+      if (event.target.value === '' || event.target.value === '31') {
+        setDate(1)
+      }
+    }
+  }
+
+  const handleWheelMonthInput = function (event) {
+    if (event.deltaY < 0) {
+      setMonth(month => Number(month) - 1 || event.target.value === '1')
+      if (event.target.value === '') {
+        setMonth(12)
+      }
+    } else if (event.deltaY > 0) {
+      setMonth(month => Number(month) + 1 || event.target.value === '12')
+      if (event.target.value === '') {
+        setMonth(1)
+      }
+    }
+  }
+
+  const handleWheelYearInput = function (event) {
+    if (event.deltaY < 0) {
+      setYear(year => Number(year) - 1)
+      if (event.target.value === '' || event.target.value === 2024) {
+        setYear(2025)
+      }
+    } else if (event.deltaY > 0) {
+      setYear(year => Number(year) + 1)
+      if (event.target.value === '' || event.target.value === '2025') {
+        setYear(2024)
+      }
+    }
+  }
+
+  const handleSecondaryClickGoButton = function (event) {
+    event.preventDefault()
+    setDate('')
+    setMonth('')
+    setYear('')
   }
 
   const readLogs = async function (event, history = false) {
@@ -105,7 +159,8 @@ function Display() {
         <div className='date-area'>
           <button
             onClick={event => readLogs(event, true)}
-            onWheel={handleWheel}
+            onWheel={event => handleWheelYesterdayButton(event)}
+            onContextMenu={event => handleSecondaryClickYesterdayButton(event)}
             data-btn='history'
           >
             {count !== 1 ? `${count} days before` : 'Yesterday...'}
@@ -122,6 +177,7 @@ function Display() {
               max={31}
               value={date}
               onChange={event => setDate(event.target.value)}
+              onWheel={event => handleWheelDateInput(event)}
             />
             <label>DD</label>
           </div>
@@ -132,21 +188,28 @@ function Display() {
               max={12}
               value={month}
               onChange={event => setMonth(event.target.value)}
+              onWheel={event => handleWheelMonthInput(event)}
             />
             <label>MM</label>
           </div>
           <div className='date-item'>
             <input
               type='number'
-              min={2000}
-              max={3000}
+              min={2024}
+              max={2025}
               value={year}
               onChange={event => setYear(event.target.value)}
+              onWheel={event => handleWheelYearInput(event)}
             />
-            <label>YY</label>
+            <label>YYYY</label>
           </div>
           <div className='date-item'>
-            <button onClick={event => readLogs(event)}>GO</button>
+            <button
+              onClick={event => readLogs(event)}
+              onContextMenu={event => handleSecondaryClickGoButton(event)}
+            >
+              GO
+            </button>
           </div>
         </div>
         {!errorDisplayedLogs ? (
