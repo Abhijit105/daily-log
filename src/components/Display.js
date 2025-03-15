@@ -61,26 +61,27 @@ function Display() {
 
   const handleWheelMonthInput = function (event) {
     if (event.deltaY < 0) {
-      setMonth(month => Number(month) - 1 || event.target.value === '1')
-      if (event.target.value === '') {
+      setMonth(month => Number(month) - 1)
+      if (event.target.value === '' || event.target.value === '1') {
         setMonth(12)
       }
     } else if (event.deltaY > 0) {
-      setMonth(month => Number(month) + 1 || event.target.value === '12')
-      if (event.target.value === '') {
+      setMonth(month => Number(month) + 1)
+      if (event.target.value === '' || event.target.value === '12') {
         setMonth(1)
       }
     }
   }
 
   const handleWheelYearInput = function (event) {
+    console.log('deltaY', event.deltaY)
     if (event.deltaY < 0) {
-      setYear(year => Number(year) - 1)
-      if (event.target.value === '' || event.target.value === 2024) {
+      setYear(Number(year) - 1)
+      if (event.target.value === '' || event.target.value === '2024') {
         setYear(2025)
       }
     } else if (event.deltaY > 0) {
-      setYear(year => Number(year) + 1)
+      setYear(Number(year) + 1)
       if (event.target.value === '' || event.target.value === '2025') {
         setYear(2024)
       }
